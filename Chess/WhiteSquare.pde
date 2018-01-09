@@ -3,7 +3,6 @@ class WhiteSquare {
   int x;
   int y;
   int size;
-  int col;
 
   WhiteSquare(int x, int y, int size) {
     this.x = x;

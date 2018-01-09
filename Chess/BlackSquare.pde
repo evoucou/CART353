@@ -22,11 +22,16 @@ class BlackSquare {
     fill(col, 10);
     rect(this.x * size, this.y * size, size, size);
   }
-}
 
+  void update() {
+    if (this.food > 0) {
+      this.food--;
+    }
+  }
 
-void update() {
-  if (!this.white && this.food > 0) {
-    this.food--;
+  void feed() {
+    if (this.food < 1000) {
+      this.food += 10;
+    }
   }
 }
