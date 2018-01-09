@@ -5,11 +5,13 @@ class BlackSquare {
   int size;
   int col;
   float food;
+  boolean squareColor;
 
-  BlackSquare(int x, int y, int size) {
+  BlackSquare(int x, int y, int size, boolean squareColor) {
     this.x = x;
     this.y = y;
     this.size = size;
+    this.squareColor = squareColor;
 
     // establish a random amount of food to start with
     this.food = random(500, 1000);

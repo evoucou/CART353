@@ -3,11 +3,13 @@ class WhiteSquare {
   int x;
   int y;
   int size;
+  boolean squareColor;
 
-  WhiteSquare(int x, int y, int size) {
+  WhiteSquare(int x, int y, int size, boolean squareColor) {
     this.x = x;
     this.y = y;
     this.size = size;
+    this.squareColor = squareColor;
   }
 
   void render() {
