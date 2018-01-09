@@ -1,3 +1,4 @@
+boolean white;
 BlackSquare[][] bSquares;
 WhiteSquare[][] wSquares;
 int rows;
@@ -20,15 +21,20 @@ void setup() {
   for (int i = 0; i < cols; i++) {
     for (int j = 0; j < rows; j++) {
       bSquares[i][j] = new BlackSquare(i, j, gridSquareSize);
+      wSquares[i][j] = new WhiteSquare(i, j, gridSquareSize);
+      white = !white;
     }
+    white = !white;
   }
   
-    for (int i = 0; i < cols; i++) {
-    for (int j = 0; j < rows; j++) {
-      wSquares[i][j] = new WhiteSquare(i, j, gridSquareSize);
-    }
+    //for (int i = 0; i < cols; i++) {
+    //for (int j = 0; j < rows; j++) {
+    //  wSquares[i][j] = new WhiteSquare(i, j, gridSquareSize);
+    //  black = !black;
+    //}
+    //black = !black;
   }
-}
+//}
 
 void draw() {
   
