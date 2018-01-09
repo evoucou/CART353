@@ -1,5 +1,5 @@
-boolean white;
-GridSquare[][] grid;
+BlackSquare[][] bSquares;
+WhiteSquare[][] wSquares;
 int rows;
 int cols;
 int gridSquareSize;
@@ -12,16 +12,21 @@ void setup() {
   cols = 8;
   gridSquareSize = 50;
 
-  grid = new GridSquare[cols][rows];
+  bSquares = new BlackSquare[cols][rows];
+  wSquares = new WhiteSquare[cols][rows];
   
   // do a double for loop to run through the grid 2D array
   // creating new alternating black and white GridSquare objects
   for (int i = 0; i < cols; i++) {
     for (int j = 0; j < rows; j++) {
-      grid[i][j] = new GridSquare(i, j, gridSquareSize, white);
-      white = !white;
+      bSquares[i][j] = new BlackSquare(i, j, gridSquareSize);
     }
-    white = !white;
+  }
+  
+    for (int i = 0; i < cols; i++) {
+    for (int j = 0; j < rows; j++) {
+      wSquares[i][j] = new WhiteSquare(i, j, gridSquareSize);
+    }
   }
 }
 
@@ -32,8 +37,13 @@ void draw() {
   // render takes care of drawing
   for (int i = 0; i < cols; i++) {
     for (int j = 0; j < rows; j++) {
-      grid[i][j].update();
-      grid[i][j].render();
+      bSquares[i][j].update();
+      bSquares[i][j].render();
+    }
+  }
+    for (int i = 0; i < cols; i++) {
+    for (int j = 0; j < rows; j++) {
+      wSquares[i][j].render();
     }
   }
   
@@ -43,6 +53,6 @@ void draw() {
 
   // do mouseOver-based feeding only on **valid** grid slots
   if (currentHorizSquare >= 0 && currentHorizSquare <= 7 && currentVertSquare >= 0 && currentVertSquare <= 7) {
-      grid[currentHorizSquare][currentVertSquare].feed();
+      bSquares[currentHorizSquare][currentVertSquare].feed();
   }
 }
