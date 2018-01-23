@@ -4,7 +4,7 @@
 //
 // This little game lets you "decorate" your room by changing its color (hover with you mouse)
 // and by chosing your own little pet (just click on the screen). Also, if you press
-// x, all the pixels in the image mix together.
+// x, you get more color options.
 
 
 Pet pet;
@@ -25,6 +25,8 @@ void draw() {
   loadPixels();
   room.loadPixels();
 
+
+  // The code for the change of blue tones
   for (int y = 0; y < room.height; y++) {
     for (int x = 0; x < room.width; x++) {
       // Calculating the 1D pixel location
@@ -36,11 +38,11 @@ void draw() {
 
       // Adjusting color tones with mouseX
       float adjustTones
-      = map(mouseY, 0, width, 0, 8);
+        = map(mouseY, 0, width, 0, 8);
       b *= adjustTones;
 
       b = constrain(b, 0, 255);
-      
+
       //Making the new color
       color mouseColor = color(r, g, b);
       pixels[loc] = mouseColor;
@@ -55,4 +57,13 @@ void draw() {
 
 void mousePressed() {
   pet.mousePressed();
+}
+
+void keyPressed() {
+  if (key == 'x') {
+    // The code more choice of colors
+    for (int i = 0; i < room.pixels.length; i++) {
+      room.pixels[i] += room.pixels[10]/10000;
+    }
+  }
 }
