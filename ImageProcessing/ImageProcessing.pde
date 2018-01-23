@@ -1,30 +1,29 @@
-PImage sleeping;
-PImage awake;
+PImage puppy;
+PImage kitty;
 float x, y;
-float rot;
+float x_offscreen, y_offscreen;
 
 
 void setup() {
-  size(560, 300);
-  sleeping = loadImage("sleeping.jpg");
-  awake = loadImage("awake.jpg");
-  x = 0;
-  y = width/2;
-  rot = 0;
+  size(560, 400);
+  puppy = loadImage("pup.png");
+  kitty = loadImage("kitty.png");
+  x = width/2;
+  y = height/2;
+  x_offscreen = -100;
+  y_offscreen = -100;
   
 }
 
 void draw() {
   
-    background(35);
-    translate(x,y);
-    rotate(rot);
+    background(102, 204, 255);
+    //translate(x,y);
     imageMode(CENTER);
-    image(sleeping, 0, 0);
-    
-    x =+ 2.0;
-    rot += 0.05;
-    if (x > width)
-    x = 0;
+    image(puppy, x, y);
+    puppy.resize(0, 120);
+    image(kitty, x_offscreen, y_offscreen);
+    kitty.resize(0, 110);
+   
     
 }
