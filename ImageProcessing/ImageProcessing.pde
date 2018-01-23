@@ -3,8 +3,8 @@
 // Image Processing
 //
 // This little game lets you "decorate" your room by changing its color (hover with you mouse)
-// and by chosing your own little pet (just click on the screen). Also, if you press
-// x, you get more color options.
+// and by chosing your own little pet (just click on the screen to switch). Also, if you press
+// x multiple time, you get more color options. Click S to save your image.
 
 
 Pet pet;
@@ -61,9 +61,14 @@ void mousePressed() {
 
 void keyPressed() {
   if (key == 'x') {
-    // The code more choice of colors
+    // The code for more choices of colors (unfortunately, destructive)
     for (int i = 0; i < room.pixels.length; i++) {
       room.pixels[i] += room.pixels[10]/10000;
     }
+  } 
+  if (key == 's') {
+    // Allowing you to save your image
+    String savedImg = "yourRoom.jpg";
+    save(savedImg);
   }
 }
