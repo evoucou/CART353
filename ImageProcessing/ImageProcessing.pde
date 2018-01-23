@@ -1,29 +1,20 @@
-PImage puppy;
-PImage kitty;
-float x, y;
-float x_offscreen, y_offscreen;
 
+Pet pet;
 
 void setup() {
   size(560, 400);
-  puppy = loadImage("pup.png");
-  kitty = loadImage("kitty.png");
-  x = width/2;
-  y = height/2;
-  x_offscreen = -100;
-  y_offscreen = -100;
-  
+
+  pet = new Pet("kitty.png", "pup.png", width/2, height/2);
 }
 
 void draw() {
-  
-    background(102, 204, 255);
-    //translate(x,y);
-    imageMode(CENTER);
-    image(puppy, x, y);
-    puppy.resize(0, 120);
-    image(kitty, x_offscreen, y_offscreen);
-    kitty.resize(0, 110);
-   
-    
+
+  background(102, 204, 255);
+  pet.move();
+  pet.display();
+
+}
+
+void mousePressed() {
+
 }
