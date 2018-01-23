@@ -47,7 +47,7 @@ class Pet {
 
     // The pet stops moving once it's centered 
     // (because it is now the other pet displayed)
-    if (x == width/2) {
+    if (x == width/2 ) {
       moving = false;
     }
 
