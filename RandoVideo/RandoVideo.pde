@@ -1,6 +1,7 @@
 import processing.video.*;
 Random generator;
 
+float t = 0;
 
 Capture video;
 
@@ -46,4 +47,7 @@ void draw() {
   noStroke();
   fill(255, 10);
   ellipse(x, 180, 16, 16);
+
+  float n = noise(t);
+  t += 0.01;
 }
