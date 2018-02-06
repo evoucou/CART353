@@ -1,53 +1,63 @@
+//
+/////// Rando Video
+//
+//
+//
+/////// Marie-Eve Cousineau
+
 import processing.video.*;
-Random generator;
+import java.util.Random;
 
-float t = 0;
+Walker w;
 
-Capture video;
+//int wPosX;
+//int wPosY;
+
+//Capture video;
+
 
 void setup() {
-  size(640, 480); 
-  video = new Capture(this, 640, 480, 30);
-  video.start();
+  size(640, 480);
+  background(255);
+  //video = new Capture(this, 640, 480, 30);
+  //video.start();
 
-  generator = new Random();
+  w = new Walker(width/2, height/2);
 }
 
 void draw() {
 
-  if (video.available()) {
-    video.read();
-  }
-  image(video, 0, 0);
+  fill(255, 3);
+  rect(0,0,width,height);
+  
+  w.step();
+  w.display();
 
-  loadPixels();
-  for ( int x = 1; x < video.width; x++ ) {
-    for ( int y = 0; y < video.height; y++ ) {
-      float threshold = 10;
-      int loc = x + y*video.width;
-      color pix = video.pixels[loc];
-      int leftLoc = (x-1) + y*video.width;
-      color leftPix = video.pixels[leftLoc];
-      float diff = abs(brightness(pix) -  brightness(leftPix));
-      if ( diff > threshold ) {
-        pixels[loc] = color(255);
-      } else {
-        pixels[loc] = color(0);
-      }
-    }
-  }
-  updatePixels();
+  //if (video.available()) {
+    //video.read();
+  //}
 
-  float num = (float) generator.nextGaussian();
-  float sd = 60;
-  float mean = 320;
+  //float redX = 0;
+  //float redY = 0;
+  //float record = 1000;
 
-  float x = sd * num + mean;
+  //for ( int x = 1; x < video.width; x++ ) {
+  //  for ( int y = 0; y < video.height; y++ ) {
 
-  noStroke();
-  fill(255, 10);
-  ellipse(x, 180, 16, 16);
+  //    int loc = x + y * width;
+  //    color pixelColor = video.pixels[loc];
+  //    float amount = dist(255, 0, 0, red(pixelColor), green(pixelColor), blue(pixelColor));
+  //    if (amount < record) {
+  //      record = amount;
+  //      redX = x;
+  //      redY = y;
+  //    }
+  //  }
+  //}
 
-  float n = noise(t);
-  t += 0.01;
+  //fill(255, 10);
+  //image(video, 0, 0);
+  //ellipse(redX, redY, 16, 16);
+
+  //w = new Walker(redX, redY);
 }
