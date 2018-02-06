@@ -1,9 +1,9 @@
-class Walker {
+class Dot {
 
   float x;
   float y;
 
-  Walker(float _x, float _y) {
+  Dot(float _x, float _y) {
     x = _x;
     y = _y;
   }

@@ -10,7 +10,7 @@
 import processing.video.*;
 import java.util.Random;
 
-Walker w;
+Dot dot;
 
 Capture video;
 
@@ -21,7 +21,7 @@ void setup() {
   video = new Capture(this, 640, 480, 30);
   video.start();
 
-  w = new Walker(width/2, height/2);
+  dot = new Dot(width/2, height/2);
 }
 
 void draw() {
@@ -30,8 +30,8 @@ void draw() {
   }
 
   float record = 1000;
-  float walkerX = 0;
-  float walkerY = 0;
+  float dotX = 0;
+  float dotY = 0;
 
   for ( int x = 1; x < video.width; x++ ) {
     for ( int y = 0; y < video.height; y++ ) {
@@ -41,14 +41,14 @@ void draw() {
       float amount = dist(255, 0, 0, red(pixelColor), green(pixelColor), blue(pixelColor));
       if (amount < record) {
         record = amount;
-        walkerX = x;
-        walkerY = y;
+        dotX = x;
+        dotY = y;
       }
     }
   }
 
-  w = new Walker(walkerX, walkerY);
+  dot = new Dot(dotX, dotY);
 
-  w.step();
-  w.display();
+  dot.step();
+  dot.display();
 }
