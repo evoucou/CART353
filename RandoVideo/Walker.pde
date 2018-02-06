@@ -9,7 +9,7 @@ class Walker {
   }
 
   void step() {
-    int multiplier = floor(random(1, 10));
+    int multiplier = floor(random(1, 7));
     
     float stepsize = montecarlo() * multiplier;
     float stepx = random(-stepsize, stepsize);
