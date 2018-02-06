@@ -2,10 +2,12 @@ class Dot {
 
   float x;
   float y;
+  color dotColor;
 
-  Dot(float _x, float _y) {
+  Dot(float _x, float _y, color _dotColor) {
     x = _x;
     y = _y;
+    dotColor = _dotColor;
   }
 
 // Generating the dot's path with the montecarlo method
@@ -41,7 +43,7 @@ class Dot {
 
   void display() {
     noStroke();
-    fill(255,0,0);
-    ellipse(x, y, 10, 10);
+    fill(dotColor);
+    ellipse(x, y, 6, 6);
   }
 }
