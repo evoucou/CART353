@@ -6,7 +6,6 @@ class Mover {
   float mass;
   float mWidth;
   float mHeight;
-  int topspeed = 10;
 
   Mover(float m, float x, float y) {
     mass = m;
@@ -30,27 +29,13 @@ class Mover {
   }
   
 
+
   void update() {
     velocity.add(acceleration);
     position.add(velocity);
     acceleration.mult(0);
-    
-    checkMouse();
   }
-  
-    void checkMouse() {
-    
-    PVector mouse = new PVector(mouseX, mouseY);
-    PVector dir = PVector.sub(mouse, position);
 
-    dir.normalize();
-    dir.mult(0.5);
-    acceleration = dir;
-
-    velocity.add(acceleration);
-    velocity.limit(topspeed);
-    position.add(velocity);
-  }
 
   void display() {
     fill(0, 127);

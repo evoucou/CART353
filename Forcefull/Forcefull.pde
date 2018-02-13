@@ -1,5 +1,6 @@
-Mover[] movers = new Mover[10];
-
+Mover[] movers = new Mover[6];
+Attractor mouse;
+int topspeed = 10;
 
 void setup() {
   size(640, 360);
@@ -7,6 +8,7 @@ void setup() {
   for (int i = 0; i < movers.length; i++) {
     movers[i] = new Mover(random(0.1, 4), 2*16, 0);
   }
+  mouse = new Attractor(mouseX, mouseY);
 }
 
 void draw() {
@@ -34,7 +36,6 @@ void draw() {
     //}
 
 
-
     PVector gravity = new PVector(0, 0.1);
     movers[i].applyForce(gravity);
 
@@ -42,4 +43,6 @@ void draw() {
     movers[i].display();
     movers[i].checkEdges();
   }
+ mouse.attract();
+ mouse.display();
 }
