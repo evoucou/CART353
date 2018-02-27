@@ -51,15 +51,7 @@ class Object {
     ellipse(position.x, position.y, mass*2, mass*2);
   }
 
-
   void checkEdges() {
-
-    if (position.x > width) {
-      position.x = 0;
-    } else if (position.x < 0) {
-      position.x = width;
-    }
-
     if (position.y > height) {
       velocity.y *= -1;
       position.y = height;

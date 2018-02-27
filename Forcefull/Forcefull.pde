@@ -1,5 +1,5 @@
-Mover[] movers = new Mover[3];
-Object[] objects= new Object[4];
+Mover[] movers = new Mover[5];
+Object[] objects= new Object[5];
 Liquid liquid;
 boolean attraction;
 
@@ -7,9 +7,10 @@ void setup() {
   size(1000, 670);
 
   for (int i = 0; i < movers.length; i++) {
-    movers[i] = new Mover();
+    movers[i] = new Mover();;
     objects[i] = new Object();
   }
+
 
   liquid = new Liquid(width/2, height/2, 100, 100, 0.1);
 }
@@ -25,7 +26,13 @@ void draw() {
     if (movers[i].position.y < objects[i].position.y+200 && movers[i].position.y > objects[i].position.y-200) {
       if (movers[i].position.x < objects[i].position.x+200 && movers[i].position.x > objects[i].position.x-200 ) {
         attraction = true;
+        
       }
+    }
+
+    if (liquid.contains(movers[i])) {
+      PVector dragForce = liquid.drag(movers[i]);
+      movers[i].applyForce(dragForce);
     }
 
     if (attraction) {
@@ -40,19 +47,9 @@ void draw() {
       objects[i].position.add(objects[i].velocity);
     }
 
-
-    if (liquid.contains(movers[i])) {
-      PVector dragForce = liquid.drag(movers[i]);
-      movers[i].applyForce(dragForce);
-
-      //PVector d = PVector.add(movers[i].position, object.position);
-    }
     movers[i].update();
     movers[i].display();
     movers[i].checkEdges();
-
-    //PVector force = movers[i].attract(object);
-    //object.applyForce(force);
 
     objects[i].update();
     objects[i].display();
