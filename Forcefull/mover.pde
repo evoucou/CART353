@@ -6,7 +6,7 @@ class Mover {
   float mWidth;
   float mHeight;
   float topspeed = 5;
-  float mass = 3;
+  float mass = 2;
   
 
  Mover() {

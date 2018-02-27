@@ -6,7 +6,7 @@ class Object {
   float mWidth;
   float mHeight;
   float mass = 10;
-  float topspeed = 5;
+  float topspeed = 7;
   
   boolean attraction = false;
 
