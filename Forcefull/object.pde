@@ -8,7 +8,7 @@ class Object {
   float mWidth;
   float mHeight;
   float topspeed=7;
-  float mass=3;
+  float mass=10;
 
   Object() {
     position = new PVector(x, y);
@@ -35,37 +35,14 @@ class Object {
     ellipse(position.x,position.y,mass*2,mass*2);
   }
   
-    PVector repel(Attractor a) {
-    PVector force = PVector.sub(position,a.position);             
-    float distance = force.mag();                                 
-    distance = constrain(distance,1.0,10000.0);                            
-    force.normalize();                                           
+  //  PVector repel(Attractor a) {
+  //  PVector force = PVector.sub(position,a.position);             
+  //  float distance = force.mag();                                 
+  //  distance = constrain(distance,1.0,10000.0);                            
+  //  force.normalize();                                           
 
-    float strength = (g * mass * a.mass) / (distance * distance); 
-    force.mult(-1*strength);                                      
-    return force;
-  }
-  
-  //  void update() {
-  //  velocity.add(acceleration);
-  //  position.add(velocity);
-  //  acceleration.mult(0);
-
-  //  PVector mousePos = new PVector(.position, mouseY);
-  //  PVector dir = PVector.sub(mousePos, this.position);
-  //  dir.normalize();
-  //  dir.mult(0.2);
-  //  this.acceleration = dir;
-
-  //  this.velocity.add(this.acceleration);
-  //  this.velocity.limit(topspeed);
-  //  this.position.add(this.velocity);
+  //  float strength = (g * mass * a.mass) / (distance * distance); 
+  //  force.mult(-1*strength);                                      
+  //  return force;
   //}
-
-
-//  void display() {
-//    stroke(0);
-//    fill(50);
-//    ellipse(x, y, 20, 20);
-//  }
 }

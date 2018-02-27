@@ -1,4 +1,4 @@
-class Attractor {
+class Mover {
 
   PVector position;
   PVector velocity;
@@ -9,7 +9,7 @@ class Attractor {
   float mass = 3;
   
 
-  Attractor() {
+ Mover() {
     position = new PVector(random(width), random(height));
     velocity = new PVector(0, 0);
     acceleration = new PVector(0, 0);

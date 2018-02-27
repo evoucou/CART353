@@ -1,52 +1,39 @@
-Attractor[] movers = new Attractor[3];
+Mover[] movers = new Mover[3];
 Object object;
+Liquid liquid;
 float g = 1;
 
 void setup() {
   size(1000, 670);
 
   for (int i = 0; i < movers.length; i++) {
-    movers[i] = new Attractor();
+    movers[i] = new Mover();
   }
   object = new Object();
+  liquid = new Liquid(0, 100, 100, 100, 0.1);
 }
 
 void draw() {
   background(225);
+
+  liquid.display();
+
   for ( int i = 0; i < movers.length; i++) {
 
+    if (liquid.contains(movers[i])) {
+      PVector dragForce = liquid.drag(movers[i]);
+      movers[i].applyForce(dragForce);
 
-    //float ldist = movers[i].position.x - movers[i].mWidth/2;
-
-    //if (ldist <= 70) {
-
-    //  ldist = constrain(ldist, 0, 70);
-    //  float lForce = map(ldist, 0, 70, 1, 0.2);
-    //  PVector l_edgeForce = new PVector(lForce, 0);
-    //  movers[i].applyForce(l_edgeForce);
-    //}
-
-    //float rdist = width - (movers[i].position.x + movers[i].mWidth/2);
-
-    //if (rdist <= 70) {
-    //  rdist = constrain(rdist, 0, 70);
-    //  float rForce = map(rdist, 0, 70, 1, 0.2);
-    //  PVector r_edgeForce = new PVector(-rForce, 0);
-    //  movers[i].applyForce(r_edgeForce);
-    //}
-
-
-    PVector gravity = new PVector(0, 0.4);
-    movers[i].applyForce(gravity);
-
+      //  PVector gravity = new PVector(0, 0.1*movers[i].mass);
+      //  movers[i].applyForce(gravit// y);
+    }
     movers[i].update();
     movers[i].display();
     movers[i].checkEdges();
+
     PVector force = movers[i].attract(object);
     object.applyForce(force);
   }
   object.update();
   object.display();
-  //mouse.attract();
-  //mouse.display();
 }
