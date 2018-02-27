@@ -1,71 +1,98 @@
-Mover[] movers = new Mover[4];
-Object[] objects= new Object[4];
-Liquid liquid1;
-Liquid liquid2;
+// FORCEFUL
+// You are a troop of aliens who want to capture planets.
+//
+// Move them around with the mouse and collect planets.
+// Avoid black holes, as it increases the gravitational force.
+// Also, if you move too fast, you might lose some planets, be careful!
+//
+// Unfortunately, this assignment did not turn the way it was supposed to. I
+// had a very hard time with it. This is as closest as I could get to the katamari damacy game...
+
+
+Alien[] aliens = new Alien[4];
+Planet[] planets = new Planet[4];
+Hole hole1;
+Hole hole2;
+
 boolean attraction;
 
-PImage comet;
+PImage planetsImg[] = new PImage[4];
 PImage star;
 PImage background;
 
 void setup() {
-  size(500, 500);
+  size(1000, 563);
 
-  for (int i = 0; i < objects.length; i++) {
-    movers[i] = new Mover();
-    objects[i] = new Object();
+  for (int i = 0; i < planets.length; i++) {
+    int n = floor(random(1, 4));
+
+    // We load our array of images (3 planets)
+    planetsImg[1] = loadImage("data/planet1.png");
+    planetsImg[2] = loadImage("data/planet2.png");
+    planetsImg[3] = loadImage("data/planet3.png");
+
+    // We create our elements
+    aliens[i] = new Alien(loadImage("data/alien.png"));
+    planets[i] = new Planet(planetsImg[n]);
   }
 
 
-  liquid1 = new Liquid(65, 45, 100, 100, 0.1);
-  liquid2 = new Liquid(300, 340, 100, 100, 0.3);
+  hole1 = new Hole(random(40, width-40), random(40, height-40), 100, 100, 0.1, loadImage("data/blackhole.png"));
+  hole2 = new Hole(random(40, width-40), random(40, height-40), 100, 100, 0.3, loadImage("data/blackhole.png"));
 }
 
 void draw() {
-  background = loadImage("data/space.gif");
+
+  background = loadImage("data/space.jpg");
   background(background);
 
-  liquid1.display();
-   liquid2.display();
+  imageMode(CENTER);
+  image(hole1.image, hole1.x, hole1.y);
+  image(hole2.image, hole2.x, hole2.y);
 
-  for ( int i = 0; i < objects.length; i++) {
+  hole1.display();
+  hole2.display();
+
+  for ( int i = 0; i < aliens.length; i++) {
+    image(planets[i].image, planets[i].position.x, planets[i].position.y);
+    image(aliens[i].image, aliens[i].position.x, aliens[i].position.y);
+
+    // The attraction only exists when the aliens are close to a planet
     attraction = false;
 
-    if (movers[i].position.y < objects[i].position.y+200 && movers[i].position.y > objects[i].position.y-200) {
-      if (movers[i].position.x < objects[i].position.x+200 && movers[i].position.x > objects[i].position.x-200 ) {
+    // So if the aliens come close within reach of one, then the planet is attracted (a radius of around 200)
+    if (aliens[i].position.y < planets[i].position.y+150 && aliens[i].position.y > planets[i].position.y-150) {
+      if (aliens[i].position.x < planets[i].position.x+150 && aliens[i].position.x > planets[i].position.x-150 ) {
         attraction = true;
-        
       }
     }
 
-    if (liquid1.contains(movers[i])) {
-      PVector dragForce = liquid1.drag(movers[i]);
-      movers[i].applyForce(dragForce);
-    }
-    
-        if (liquid2.contains(movers[i])) {
-      PVector dragForce = liquid2.drag(movers[i]);
-      movers[i].applyForce(dragForce);
+    //If the aliens are inside a black hole, a second force is applied.
+    if (hole1.contains(aliens[i])) {
+      PVector dragForce = hole1.drag(aliens[i]);
+      aliens[i].applyForce(dragForce);
     }
 
+    // Same for second black hole
+    if (hole2.contains(aliens[i])) {
+      PVector dragForce = hole2.drag(aliens[i]);
+      aliens[i].applyForce(dragForce);
+    }
+
+    //Technically, the aliens themlseves attract the planets, because the boolean becomes true
+    //according to the alien's and planets' position. However, once the planet is attracted, it gravitates
+    // around the mouse, just like the aliens.
     if (attraction) {
-      PVector mousePos = new PVector(mouseX, mouseY);
-      PVector dir = PVector.sub(mousePos, objects[i].position);
-      dir.normalize();
-      dir.mult(0.2);
-      objects[i].acceleration = dir;
-
-      objects[i].velocity.add(objects[i].acceleration);
-      objects[i].velocity.limit(5);
-      objects[i].position.add(objects[i].velocity);
+      planets[i].orbit();
     }
 
-    movers[i].update();
-    movers[i].display();
-    movers[i].checkEdges();
+    // Call our functions
+    aliens[i].update();
+    aliens[i].display();
+    aliens[i].checkEdges();
 
-    objects[i].update();
-    objects[i].display();
-    objects[i].checkEdges();
+    planets[i].update();
+    planets[i].display();
+    planets[i].checkEdges();
   }
 }

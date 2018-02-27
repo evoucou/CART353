@@ -1,22 +1,28 @@
-class Mover {
+class Alien {
 
   PVector position;
   PVector velocity;
   PVector acceleration;
+  
   float mWidth;
   float mHeight;
   float topspeed = 5;
   float mass = 2;
   
+  PImage image;
+  
 
- Mover() {
+ Alien(PImage _image) {
     position = new PVector(random(width), random(height));
     velocity = new PVector(0, 0);
     acceleration = new PVector(0, 0);
     mWidth = mass*10;
     mHeight = mass*10;
+    
+   image = _image;
   }
 
+  // We generate the force 
   void applyForce(PVector force) {
     PVector f = PVector.div(force, mass);
     acceleration.add(f);
@@ -29,22 +35,13 @@ class Mover {
       position.y = height;
     }
   }
-  
-  //  PVector attract(Object o) {
-  //  PVector force = PVector.sub(position,o.position); 
-  //  float d = force.mag();
-  //  d = constrain(d, 0.50, 20);
-  //  force.normalize();
-  //  float strenght = (g * mass * o.mass) / (d * d);
-  //  force.mult(strenght);                              
-  //  return force;
-  //}
 
   void update() {
     velocity.add(acceleration);
     position.add(velocity);
     acceleration.mult(0);
 
+    // This code tells the aliens to follow the mouse with a more natural-like effect
     PVector mousePos = new PVector(mouseX, mouseY);
     PVector dir = PVector.sub(mousePos, this.position);
     dir.normalize();
@@ -57,7 +54,6 @@ class Mover {
   }
 
   void display() {
-    fill(0, 127);
-    ellipse(position.x, position.y, mWidth, mHeight);
+noStroke();
   }
 }
