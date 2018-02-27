@@ -1,4 +1,6 @@
 Attractor[] movers = new Attractor[3];
+Object object;
+float g = 1;
 
 void setup() {
   size(1000, 670);
@@ -6,7 +8,7 @@ void setup() {
   for (int i = 0; i < movers.length; i++) {
     movers[i] = new Attractor();
   }
-  //mouse = new Attractor(mouseX, mouseY);
+  object = new Object();
 }
 
 void draw() {
@@ -40,7 +42,11 @@ void draw() {
     movers[i].update();
     movers[i].display();
     movers[i].checkEdges();
+    PVector force = movers[i].attract(object);
+    object.applyForce(force);
   }
- //mouse.attract();
- //mouse.display();
+  object.update();
+  object.display();
+  //mouse.attract();
+  //mouse.display();
 }

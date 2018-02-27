@@ -22,11 +22,22 @@ class Attractor {
     acceleration.add(f);
   }
 
+
   void checkEdges() {
     if (position.y > height) {
       velocity.y *= -1;
       position.y = height;
     }
+  }
+  
+    PVector attract(Object a) {
+    PVector force = PVector.sub(position,a.position);   // Calculate direction of force
+    float d = force.mag();                              // Distance between objects
+    d = constrain(d,5.0,25.0);                        // Limiting the distance to eliminate "extreme" results for very close or very far objects
+    force.normalize();                                  // Normalize vector (distance doesn't matter here, we just want this vector for direction)
+    float strength = (g * mass * a.mass) / (d * d);      // Calculate gravitional force magnitude
+    force.mult(strength);                                  // Get force vector --> magnitude * direction
+    return force;
   }
 
   void update() {

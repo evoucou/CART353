@@ -1,4 +1,4 @@
-class Attracted {
+class Object {
   PVector position;
   PVector velocity;
   PVector acceleration;
@@ -10,7 +10,7 @@ class Attracted {
   float topspeed=7;
   float mass=3;
 
-  Attracted() {
+  Object() {
     position = new PVector(x, y);
     velocity = new PVector(0, 0);
     acceleration = new PVector(0, 0);
@@ -35,13 +35,13 @@ class Attracted {
     ellipse(position.x,position.y,mass*2,mass*2);
   }
   
-    PVector repel(Attracted a) {
+    PVector repel(Attractor a) {
     PVector force = PVector.sub(position,a.position);             
     float distance = force.mag();                                 
     distance = constrain(distance,1.0,10000.0);                            
     force.normalize();                                           
 
-    float strength = (g * mass * m.mass) / (distance * distance); 
+    float strength = (g * mass * a.mass) / (distance * distance); 
     force.mult(-1*strength);                                      
     return force;
   }
