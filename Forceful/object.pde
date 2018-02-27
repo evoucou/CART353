@@ -6,7 +6,7 @@ class Object {
   float mWidth;
   float mHeight;
   float mass = 10;
-  float topspeed = 7;
+  float topspeed = 2;
   
   boolean attraction = false;
 
@@ -14,8 +14,8 @@ class Object {
     position = new PVector(random(width), random(height));
     velocity = new PVector(0, 0);
     acceleration = new PVector(0, 0);
-    mWidth = mass*10;
-    mHeight = mass*10;
+    mWidth = mass*5;
+    mHeight = mass*5;
   }
 
 

@@ -1,11 +1,15 @@
-Mover[] movers = new Mover[6];
-Object[] objects= new Object[6];
+Mover[] movers = new Mover[4];
+Object[] objects= new Object[4];
 Liquid liquid1;
 Liquid liquid2;
 boolean attraction;
 
+PImage comet;
+PImage star;
+PImage background;
+
 void setup() {
-  size(885, 670);
+  size(500, 500);
 
   for (int i = 0; i < objects.length; i++) {
     movers[i] = new Mover();
@@ -13,12 +17,13 @@ void setup() {
   }
 
 
-  liquid1 = new Liquid(width/2, height/2, 100, 100, 0.1);
-  liquid2 = new Liquid(100, 200, 100, 100, 0.3);
+  liquid1 = new Liquid(65, 45, 100, 100, 0.1);
+  liquid2 = new Liquid(300, 340, 100, 100, 0.3);
 }
 
 void draw() {
-  background(225);
+  background = loadImage("data/space.gif");
+  background(background);
 
   liquid1.display();
    liquid2.display();
