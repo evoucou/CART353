@@ -30,15 +30,15 @@ class Mover {
     }
   }
   
-    PVector attract(Object a) {
-    PVector force = PVector.sub(position,a.position);   // Calculate direction of force
-    float d = force.mag();                              // Distance between objects
-    d = constrain(d,5.0,25.0);                        // Limiting the distance to eliminate "extreme" results for very close or very far objects
-    force.normalize();                                  // Normalize vector (distance doesn't matter here, we just want this vector for direction)
-    float strength = (g * mass * a.mass) / (d * d);      // Calculate gravitional force magnitude
-    force.mult(strength);                                  // Get force vector --> magnitude * direction
-    return force;
-  }
+  //  PVector attract(Object o) {
+  //  PVector force = PVector.sub(position,o.position); 
+  //  float d = force.mag();
+  //  d = constrain(d, 0.50, 20);
+  //  force.normalize();
+  //  float strenght = (g * mass * o.mass) / (d * d);
+  //  force.mult(strenght);                              
+  //  return force;
+  //}
 
   void update() {
     velocity.add(acceleration);
@@ -48,7 +48,7 @@ class Mover {
     PVector mousePos = new PVector(mouseX, mouseY);
     PVector dir = PVector.sub(mousePos, this.position);
     dir.normalize();
-    dir.mult(0.2);
+    dir.mult(0.3);
     this.acceleration = dir;
 
     this.velocity.add(this.acceleration);

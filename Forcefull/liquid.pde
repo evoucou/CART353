@@ -11,7 +11,8 @@
     c = c_;
   }
   
-  // Is the Mover in the Liquid?
+
+    // Is the Mover in the Liquid?
   boolean contains(Mover m) {
     PVector l = m.position;
     if (l.x > x && l.x < x + w && l.y > y && l.y < y + h) {
@@ -22,6 +23,15 @@
     }
   }
   
+    boolean contains(Object o) {
+    PVector l = o.position;
+    if (l.x > x && l.x < x + w && l.y > y && l.y < y + h) {
+      return true;
+    }  
+    else {
+      return false;
+    }
+  }
   // Calculate drag force
   PVector drag(Mover m) {
     // Magnitude is coefficient * speed squared
@@ -30,10 +40,9 @@
 
     // Direction is inverse of velocity
     PVector dragForce = m.velocity.get();
-    dragForce.mult(-1);
+   dragForce.mult(-1);
     
-    // Scale according to magnitude
-    // dragForce.setMag(dragMagnitude);
+    dragForce.setMag(dragMagnitude);
     dragForce.normalize();
     dragForce.mult(dragMagnitude);
     return dragForce;
