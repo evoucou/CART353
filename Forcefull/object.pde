@@ -7,6 +7,8 @@ class Object {
   float mHeight;
   float mass = 10;
   float topspeed = 5;
+  
+  boolean attraction = false;
 
   Object() {
     position = new PVector(random(width), random(height));
@@ -26,18 +28,22 @@ class Object {
     velocity.add(acceleration);
     position.add(velocity);
     acceleration.mult(0);
- 
 
-    //PVector mousePos = new PVector(mouseX, mouseY);
-    //PVector dir = PVector.sub(mousePos, this.position);
-    //dir.normalize();
-    //dir.mult(0.2);
-    //this.acceleration = dir;
-
-    //this.velocity.add(this.acceleration);
-    //this.velocity.limit(topspeed);
-    //this.position.add(this.velocity);
   }
+  
+  //void orbit() {
+  //if (attraction == true) {
+  //  PVector mousePos = new PVector(mouseX, mouseY);
+  //  PVector dir = PVector.sub(mousePos, this.position);
+  //  dir.normalize();
+  //  dir.mult(0.2);
+  //  this.acceleration = dir;
+
+  //  this.velocity.add(this.acceleration);
+  //  this.velocity.limit(topspeed);
+  //  this.position.add(this.velocity);
+  //}
+  //}
 
   void display() {
     stroke(0);
