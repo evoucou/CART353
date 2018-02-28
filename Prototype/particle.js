@@ -1,3 +1,5 @@
+var bottom = 600;
+
 function Particle(x, y, mass, displayColor) {
 
   this.pos = new p5.Vector(x, y);
@@ -6,6 +8,7 @@ function Particle(x, y, mass, displayColor) {
   this.mass = mass;
   this.displayColor = displayColor;
   this.fallRate = map(this.mass, pMinMass, pMaxMass, 0.1, 0.05);
+
 
   this.getBoundingBox = function() {
     var radius = this.mass/2;
@@ -28,70 +31,69 @@ function Particle(x, y, mass, displayColor) {
     this.acc.mult(0);
   }
 
-  this.resolveCollisions = function() {
-    var hit_object = false;
+  //this.resolveCollisions = function() {
+  //  var hit_bottom = false;
 
-    var bb1 = this.getBoundingBox();
+    //var bb1 = this.getBoundingBox();
 
-    for (var c = 0; c < collisions.length; c++) {
-      var col = collisions[c];
+    //for (var c = 0; c < collisions.length; c++) {
+    // var col = collisions[c];
+    //}
 
-      var bb2 = col.getBoundingBox();
+    //  var bb2 = collision.getBoundingBox();
 
-      // First check bounding box to optimize checks.
-      var is_close_enough = do_aabb_collision(bb1[0], bb1[1], bb1[2], bb1[3],
-                                              bb2[0], bb2[1], bb2[2], bb2[3]);
+    //  // First check bounding box to optimize checks.
+    //  var is_close_enough = do_aabb_collision(bb1[0], bb1[1], bb1[2], bb1[3],
+    //                                          bb2[0], bb2[1], bb2[2], bb2[3]);
 
-      if (is_close_enough) {
-        var distance = dist(this.pos.x, this.pos.y, col.pos.x, col.pos.y);
+    //if (is_close_enough) {
+    //  var distance = dist(this.pos.x, this.pos.y, col.pos.x, col.pos.y);
 
-        if (distance < col.mass/2) {
-          // Push out of collision object.
-          var offset = this.pos.copy();
-          offset.sub(col.pos);
-          offset.normalize();
-          offset.mult(col.mass/2-distance);
-          this.pos.add(offset);
+  //  if (this.pos.y > bottom) {
+  //    // Push out of collision object.
+  //    var offset = this.pos.copy();
+  //    offset.sub(collisions);
+  //    offset.normalize();
+  //    offset.mult(collisions.mass/2-distance);
+  //    this.pos.add(offset);
 
-          var friction = 20;
-          var dampening = map(this.mass, pMinMass, pMaxMass, 1, 0.8);
-          var mag = this.vel.mag();
+  //    var friction = 2;
+  //    var dampening = map(this.mass, pMinMass, pMaxMass, 1, 0.8);
+  //    var mag = this.vel.mag();
 
-          // Get its new vector.
-          var bounce = this.pos.copy();
-          bounce.sub(col.pos);
-          bounce.normalize();
-          bounce.mult(mag*friction*dampening);
-          this.vel = bounce;
+  //    // Get its new vector.
+  //    var bounce = this.pos.copy();
+  //    bounce.sub(collisions);
+  //    bounce.normalize();
+  //    bounce.mult(mag*friction*dampening);
+  //    this.vel = bounce;
 
-          if (this.mass > 2) {
-            this.mass = max(1, this.mass-2);
+  //    if (this.mass > 2) {
+  //      this.mass = max(1, this.mass-2);
 
-            var splitCount = 20();
+  //      var splitCount = 6;
 
-            for (var s = 0; s < splitCount; s++) {
-              var mass = max(1, this.mass-1);
-              var displayColor = color(255);
+  //      for (var s = 0; s < splitCount; s++) {
+  //        var mass = max(1, this.mass-1);
+  //        var displayColor = color(255);
 
-              var splash = new Particle(this.pos.x, this.pos.y, mass, displayColor);
+  //        var splash = new Particle(this.pos.x, this.pos.y, mass, displayColor);
 
-              splash.vel = this.vel.copy();
-              splash.vel.rotate(radians(random(-45, 45)));
-              splash.vel.mult(random(0.6, 0.9));
+  //        splash.vel = this.vel.copy();
+  //        splash.vel.rotate(radians(random(-45, 45)));
+  //        splash.vel.mult(random(0.6, 0.9));
 
-              particles[particles.length] = splash;
-            }
-          }
+  //        particles[particles.length] = splash;
+  //      }
+  //    }
 
-          hit_object = true;
+  //    hit_bottom = true;
 
-          break;
-        }
-      }
-    }
-
-    return hit_object;
-  }
+  //    //break;
+  //  }
+  //  return hit_bottom;
+  //}
+  //}
 
   this.display = function() {
     stroke(this.displayColor);
