@@ -23,6 +23,9 @@ var bottomCollision;
 
 var fps;
 
+var colorDisplay;
+
+var input;
 
 function do_aabb_collision(ax, ay, Ax, Ay, bx, by, Bx, By) {
   return ! ((Ax < bx) || (Bx < ax) || (Ay < by) || (By < ay));
@@ -45,6 +48,8 @@ function setup() {
   waterfallMin = width/2.6;
   waterfallMax = width-width/2.6;
 
+  input = createInput('type your name');
+
   //  // Create collision objects.
   //  for (var i = 0; i < 10; i++) {
   //    var x = random(waterfallMin, waterfallMax);
@@ -65,7 +70,7 @@ function draw() {
   for (var i = 0; i < spawnCount; i++) {
     var x = random(waterfallMin, waterfallMax);
     var mass = random(pMinMass, pMaxMass);
-    var displayColor = color(random(180, 200), 255, 255);
+    displayColor = color(random(180, 200), 255, 255);
 
     var newParticle = new Particle(x, 0, mass, displayColor);
     particles[particles.length] = newParticle;
