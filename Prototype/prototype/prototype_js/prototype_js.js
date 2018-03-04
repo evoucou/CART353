@@ -65,15 +65,9 @@ function draw() {
   for (var i = 0; i < spawnCount; i++) {
     var x = random(waterfallMin, waterfallMax);
     var mass = random(pMinMass, pMaxMass);
+    var displayColor = color(random(180, 200), 255, 255);
 
-    //if (particles.length % 5 == 0) {
-
-    //  var displayColor = color(255,);
-    //} else {
-    //  var displayColor = color(random(180, 210), 255, 255);
-    //}
-
-    var newParticle = new Particle(x, 0, mass);
+    var newParticle = new Particle(x, 0, mass, displayColor);
     particles[particles.length] = newParticle;
   }
 
@@ -84,15 +78,19 @@ function draw() {
   for (var i = particles.length-1; i > -1; i--) {
     particles[i].display();
 
-    if (particles[i].pos.y > windowHeight - 100) {
-      bottomCollision = true;
-    } else {
-      bottomCollision = false;
-    }
+    //    if (bottomCollision) {
 
-    if (bottomCollision) {
-      particles[i].alpha -= 5; 
-      console.log(particles[i].alpha);
+    //  var displayColor = color(255);
+    //} else {
+    //  var displayColor = color(random(180, 200), 255, 255);
+    //}
+
+    if (particles[i].pos.y > windowHeight - 100) {
+
+      particles[i].alpha -= 25; 
+      console.log(particles[i].alpha); 
+
+      displayColor = color(255);
 
       //particles[i].vel.x *= -1;      
       //var gravityBounce = new p5.Vector(0, 0.1);

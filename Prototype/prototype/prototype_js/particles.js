@@ -1,11 +1,11 @@
-
-function Particle(x, y, mass) {
-
+function Particle(x, y, mass, displayColor) {
+  
   this.pos = new p5.Vector(x, y);
   this.vel = new p5.Vector(0, 0);
   this.acc = new p5.Vector(0, 0);
   this.mass = mass;
-  //this.displayColor = displayColor;
+  this.displayColor = displayColor;
+  //displayColor = var newColor;
   this.fallRate = map(this.mass, pMinMass, pMaxMass, 0.1, 0.05);
   this.alpha = 255;
 
@@ -112,8 +112,8 @@ function Particle(x, y, mass) {
   //  return hit_bottom;
   //}
 
-  this.display = function() {    
-    stroke(255, this.alpha);
+  this.display = function() { 
+    stroke(displayColor, this.alpha);
     strokeWeight(this.mass);
     point(this.pos.x, this.pos.y);
   }
