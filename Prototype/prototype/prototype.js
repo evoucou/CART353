@@ -84,8 +84,7 @@ function draw() {
   // We have to do this, or else, we will skip a 'number' in our array, since we are deleting one.
   for (var i = particles.length-1; i > -1; i--) {
     particles[i].display();
-    //particles[i].checkBottom();
-    
+
       if (particles[i].pos.y > 500) {
     bottomCollision = true;
   } else {
