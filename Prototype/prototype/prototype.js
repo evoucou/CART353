@@ -83,8 +83,6 @@ function draw() {
   // Here, the loop looks like this because we are checking the particles in reverse.
   // We have to do this, or else, we will skip a 'number' in our array, since we are deleting one.
   for (var i = particles.length-1; i > -1; i--) {
-    //particles[i].move();     //var bottomCollision =    
-    //particles[i].resolveCollisions();
     particles[i].display();
     //particles[i].checkBottom();
     
