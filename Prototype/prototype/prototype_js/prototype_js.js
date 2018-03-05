@@ -24,10 +24,10 @@ var bottomCollision;
 var fps;
 
 var colorDisplay;
-
 var typing = false;
 
-var counter;
+var timer;
+var typingDelay = 10;
 
 //var input;
 
@@ -49,15 +49,13 @@ function do_aabb_collision(ax, ay, Ax, Ay, bx, by, Bx, By) {
 function setup() {
   createCanvas(windowWidth, windowHeight);
 
+  setInterval(timeIt, 1000);
+
   waterfallMin = width/2.6;
   waterfallMax = width-width/2.6;
 
-  setInterval(timeIt, 1000);
-
-  function timeIt() {
-    counter++;
-    console.log(counter);
-  }
+  //var timer = select('#timer');
+  //timer.html('0');
 
 
   //input = createInput('type your name');
@@ -114,7 +112,6 @@ function draw() {
     } else {
       particles[i].alpha = 255;
       particles[i].move();
-
     }
 
     if (particles[i].alpha < 0) {
@@ -147,10 +144,21 @@ function draw() {
   }
 }
 
+
 function keyPressed() {
   return typing = true;
 }
 
 function keyReleased() {
   return typing = false;
+  timeIt();
+}
+
+function timeIt() {
+  console.log(typingDelay);
+
+  typingDelay--;
+  if (typingDelay == 0) {
+    typingDelay = 10;
+  }
 }
