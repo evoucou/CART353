@@ -28,10 +28,13 @@ function Particle(x, y, mass, displayColor) {
     this.pos.add(this.vel);
     this.acc.mult(0);
 
+  }
+
+  this.gravity = function() {
+    
     var gravity = new p5.Vector(0, this.fallRate);
     this.acc.add(gravity);
   }
-
 
   //this.checkBottom = function() {
   //  if (this.pos.y > 500) {

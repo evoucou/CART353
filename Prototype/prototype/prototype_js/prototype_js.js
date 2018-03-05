@@ -25,7 +25,7 @@ var fps;
 
 var colorDisplay;
 
-var typing;
+var typing = false;
 
 //var input;
 
@@ -69,13 +69,15 @@ function draw() {
   colorMode(HSB, 360);
 
   // Spawn new particles.
-  for (var i = 0; i < spawnCount; i++) {
-    var x = random(waterfallMin, waterfallMax);
-    var mass = random(pMinMass, pMaxMass);
-    displayColor = color(random(180, 200), 255, 255);
+  if (typing) {
+    for (var i = 0; i < spawnCount; i++) {
+      var x = random(waterfallMin, waterfallMax);
+      var mass = random(pMinMass, pMaxMass);
+      displayColor = color(random(180, 200), 255, 255);
 
-    var newParticle = new Particle(x, 0, mass, displayColor);
-    particles[particles.length] = newParticle;
+      var newParticle = new Particle(x, 0, mass, displayColor);
+      particles[particles.length] = newParticle;
+    }
   }
 
   colorMode(RGB, 255);
@@ -83,6 +85,7 @@ function draw() {
   // Here, the loop looks like this because we are checking the particles in reverse.
   // We have to do this, or else, we will skip a 'number' in our array, since we are deleting one.
   for (var i = particles.length-1; i > -1; i--) {
+
     particles[i].display();
 
     //    if (bottomCollision) {
@@ -93,20 +96,17 @@ function draw() {
     //}
 
     if (particles[i].pos.y > windowHeight - 50) {
-
-      particles[i].alpha -= 25; 
-      console.log(particles[i].alpha); 
+      particles[i].alpha -= 25;  
 
       //particles[i].vel.x *= -1;      
       //var gravityBounce = new p5.Vector(0, 0.1);
       //particles[i].acc.add(gravityBounce);
     } else {
       particles[i].alpha = 255;
-      //particles[i].move();
+      particles[i].move();
 
       if (typing) {
-        particles[i].move();
-        console.log("a key is pressed");
+        particles[i].gravity();
       }
     }
 
@@ -141,5 +141,9 @@ function draw() {
 }
 
 function keyPressed() {
-return typing = true;
+  return typing = true;
+}
+
+function keyReleased() {
+  return typing = false;
 }
