@@ -25,7 +25,9 @@ var fps;
 
 var colorDisplay;
 
-var input;
+var typing;
+
+//var input;
 
 function do_aabb_collision(ax, ay, Ax, Ay, bx, by, Bx, By) {
   return ! ((Ax < bx) || (Bx < ax) || (Ay < by) || (By < ay));
@@ -48,7 +50,7 @@ function setup() {
   waterfallMin = width/2.6;
   waterfallMax = width-width/2.6;
 
-  input = createInput('type your name');
+  //input = createInput('type your name');
 
   //  // Create collision objects.
   //  for (var i = 0; i < 10; i++) {
@@ -90,19 +92,22 @@ function draw() {
     //  var displayColor = color(random(180, 200), 255, 255);
     //}
 
-    if (particles[i].pos.y > windowHeight - 100) {
+    if (particles[i].pos.y > windowHeight - 50) {
 
       particles[i].alpha -= 25; 
       console.log(particles[i].alpha); 
-
-      displayColor = color(255);
 
       //particles[i].vel.x *= -1;      
       //var gravityBounce = new p5.Vector(0, 0.1);
       //particles[i].acc.add(gravityBounce);
     } else {
       particles[i].alpha = 255;
-      particles[i].move();
+      //particles[i].move();
+
+      if (typing) {
+        particles[i].move();
+        console.log("a key is pressed");
+      }
     }
 
     if (particles[i].alpha < 0) {
@@ -133,4 +138,8 @@ function draw() {
   if (frameCount % 10 == 0) {
     fps = frameRate().toFixed(2);
   }
+}
+
+function keyPressed() {
+return typing = true;
 }
