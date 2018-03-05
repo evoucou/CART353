@@ -1,5 +1,5 @@
 function Particle(x, y, mass, displayColor) {
-  
+
   this.pos = new p5.Vector(x, y);
   this.vel = new p5.Vector(0, 0);
   this.acc = new p5.Vector(0, 0);
@@ -28,12 +28,12 @@ function Particle(x, y, mass, displayColor) {
     this.pos.add(this.vel);
     this.acc.mult(0);
 
+    var gravity = new p5.Vector(0, this.fallRate);
+    this.acc.add(gravity);
   }
 
   this.gravity = function() {
-    
-    var gravity = new p5.Vector(0, this.fallRate);
-    this.acc.add(gravity);
+
   }
 
   //this.checkBottom = function() {

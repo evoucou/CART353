@@ -27,6 +27,8 @@ var colorDisplay;
 
 var typing = false;
 
+var counter;
+
 //var input;
 
 function do_aabb_collision(ax, ay, Ax, Ay, bx, by, Bx, By) {
@@ -49,6 +51,14 @@ function setup() {
 
   waterfallMin = width/2.6;
   waterfallMax = width-width/2.6;
+
+  setInterval(timeIt, 1000);
+
+  function timeIt() {
+    counter++;
+    console.log(counter);
+  }
+
 
   //input = createInput('type your name');
 
@@ -105,9 +115,6 @@ function draw() {
       particles[i].alpha = 255;
       particles[i].move();
 
-      if (typing) {
-        particles[i].gravity();
-      }
     }
 
     if (particles[i].alpha < 0) {
