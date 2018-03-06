@@ -30,9 +30,9 @@ var delay = 0;
 
 //var input;
 
-function do_aabb_collision(ax, ay, Ax, Ay, bx, by, Bx, By) {
-  return ! ((Ax < bx) || (Bx < ax) || (Ay < by) || (By < ay));
-}
+//function do_aabb_collision(ax, ay, Ax, Ay, bx, by, Bx, By) {
+//  return ! ((Ax < bx) || (Bx < ax) || (Ay < by) || (By < ay));
+//}
 
 
 //// Set new targets for collision objects to lerp to.
