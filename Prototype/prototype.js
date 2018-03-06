@@ -1,9 +1,6 @@
 /*
 Waterfall cascades
- 
- Simulation of water colliding against rocks, and splitting to smaller drops.
- 
- Author:
+
  Jason Labbe
  
  Site:
