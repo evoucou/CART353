@@ -14,13 +14,12 @@ var pMinMass = 2;
 var pMaxMass = 8;
 var cMinMass = 15;
 var cMaxMass = 100;
-
+var interval ;
 var waterfallMin;
 var waterfallMax;
 
 var particles = [];
 var bottomCollision;
-
 var fps;
 
 var colorDisplay;
@@ -28,6 +27,7 @@ var typing = false;
 
 var timer;
 var typingDelay = 10;
+var timerRunning = false;
 
 //var input;
 
@@ -49,10 +49,16 @@ function do_aabb_collision(ax, ay, Ax, Ay, bx, by, Bx, By) {
 function setup() {
   createCanvas(windowWidth, windowHeight);
 
-  setInterval(timeIt, 1000);
+  if (timerRunning) {
+    interval = setInterval(timeIt, 1000);
+  }
 
   waterfallMin = width/2.6;
   waterfallMax = width-width/2.6;
+
+  //interval = setInterval(timeIt, 1000);
+
+  //timer = createP('timer');
 
   //var timer = select('#timer');
   //timer.html('0');
@@ -73,6 +79,7 @@ function draw() {
   background(0, 150);
 
   var spawnCount = 20;
+
 
   colorMode(HSB, 360);
 
@@ -146,19 +153,25 @@ function draw() {
 
 
 function keyPressed() {
-  return typing = true;
+  console.log('pressed');
+  timerRunning = false;
+  typing = true;
 }
 
 function keyReleased() {
-  return typing = false;
-  timeIt();
+  console.log('released');
+  //typingDelay = 0;
+  timerRunning = true;
+  typing = false;
 }
 
-function timeIt() {
-  console.log(typingDelay);
 
+function timeIt() {
+  console.log(typingDelay); 
   typingDelay--;
-  if (typingDelay == 0) {
+
+  if (typingDelay == 0)
+  {
     typingDelay = 10;
   }
 }
