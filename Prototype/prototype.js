@@ -1,6 +1,6 @@
 /*
 Waterfall cascades
-
+ 
  Jason Labbe
  
  Site:
@@ -45,10 +45,6 @@ function do_aabb_collision(ax, ay, Ax, Ay, bx, by, Bx, By) {
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-
-  if (timerRunning) {
-    interval = setInterval(timeIt, 1000);
-  }
 
   waterfallMin = width/2.6;
   waterfallMax = width-width/2.6;
@@ -151,24 +147,26 @@ function draw() {
 
 function keyPressed() {
   console.log('pressed');
-  timerRunning = false;
+  typingDelay = 0;
+  clearInterval(interval);
+  //timerRunning = false;
   typing = true;
 }
 
 function keyReleased() {
   console.log('released');
-  //typingDelay = 0;
-  timerRunning = true;
+  interval = setInterval(timeIt, 1000);
+  //timerRunning = true;
   typing = false;
 }
 
 
 function timeIt() {
-  console.log(typingDelay); 
-  typingDelay--;
+  console.log(typingDelay);
 
   if (typingDelay == 0)
   {
     typingDelay = 10;
   }
+  typingDelay--;
 }
