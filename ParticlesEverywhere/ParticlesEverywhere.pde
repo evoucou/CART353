@@ -2,7 +2,7 @@ ParticleSystem ps;
 
 void setup() {
   size(500, 500);
-  ps = new ParticleSystem();
+  ps = new ParticleSystem(1);
 }
 
 void draw() {

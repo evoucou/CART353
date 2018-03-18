@@ -1,9 +1,12 @@
-class ParticleSystem {
-  
+class ParticleSystem { //<>//
+
   ArrayList<Particle> particles;
-  
-  ParticleSystem() {
+
+  ParticleSystem(int num) {
     particles = new ArrayList<Particle>();
+    for (int i = 0; i < num; i++) {
+    particles.add(new Particle());
+    }
   }
 
   void addParticle() {
@@ -14,7 +17,18 @@ class ParticleSystem {
     for (int i = particles.size()-1; i >= 0; i--) {
       Particle p = particles.get(i);
       p.display();
-      p.update(); //<>//
+      p.update();
+      if (p.gone()) {
+        particles.remove(i);
+      }
     }
   }
+
+  //boolean dead() {
+  //  if (particles.isEmpty()) {
+  //    return true;
+  //  } else {
+  //    return false;
+  //  }
+  //}
 }

@@ -3,54 +3,70 @@ class Particle {
   PVector velocity;
   PVector acceleration;
 
-  float mWidth;
-  float mHeight;
-  float topspeed = 2;
+  float topspeed = 5;
   float mass = 2;
 
-  float xoff, yoff;
+  int lifespan = 255;
 
-  float r = 15;
+  // Decides wether fish appear from left side or right side of screen
+  float leftOrRight() { 
+    float value = random(0, 1);
+    float Xpos;
+
+    if (value < 0.5) {
+      Xpos = 0;
+    } else {
+      Xpos = width;
+    }
+    return Xpos;
+  }
+
 
   Particle() {
-    location = new PVector(random(width), random(height));
+    location = new PVector(random(leftOrRight()), random(height));
     velocity = new PVector(0, 0);
     acceleration = new PVector(0, 0);
-    mWidth = mass*10;
-    mHeight = mass*10;
   }
 
   void update() {
     velocity.add(acceleration);
     location.add(velocity);
-    acceleration.mult(0);
 
     PVector mousePos = new PVector(mouseX, mouseY);
     PVector dir = PVector.sub(mousePos, this.location);
     dir.normalize();
-    dir.mult(0.3);
-    this.acceleration = dir;
+    dir.mult(0.2);
+    this.acceleration = dir.div(mass);
 
     this.velocity.add(this.acceleration);
     this.velocity.limit(topspeed);
     this.location.add(this.velocity);
+
+    if (dir.x == 0 && dir.y == 0) {
+      lifespan -= 15;
+      println(lifespan);
+    }
   }
 
-  void applyForce(PVector force) {
-    PVector f = PVector.div(force, mass);
-    acceleration.add(f);
-  }
 
   void display() {
     float angle = velocity.heading();
 
     stroke(0);
-    fill(175);
+    fill(175, lifespan);
     pushMatrix();
     rectMode(CENTER);
     translate(location.x, location.y);
     rotate(angle);
     rect(0, 0, 14, 4);
     popMatrix();
+  }
+
+  boolean gone() {
+    if (lifespan < 0) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }
