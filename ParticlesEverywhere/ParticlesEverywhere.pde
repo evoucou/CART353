@@ -1,15 +1,15 @@
-Particle p;
+ParticleSystem ps;
 
 void setup() {
-size(500,500);
-p = new Particle();
+  size(500, 500);
+  ps = new ParticleSystem();
 }
 
 void draw() {
-background(255);
-p.display();
-p.update();
-//float m = p.mass;
-//PVector gravity = new PVector(0,0.1*m);
-//p.applyForce(gravity);
+  background(255);
+  ps.run();
+  ps.addParticle();
+  //float m = p.mass;
+  //PVector gravity = new PVector(0,0.1*m);
+  //p.applyForce(gravity);
 }
