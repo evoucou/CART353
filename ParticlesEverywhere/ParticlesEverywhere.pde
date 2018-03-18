@@ -11,5 +11,4 @@ void draw() {
   ps.addParticle();
   //float m = p.mass;
   //PVector gravity = new PVector(0,0.1*m);
-  //p.applyForce(gravity);
 }

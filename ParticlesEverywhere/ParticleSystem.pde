@@ -18,7 +18,7 @@ class ParticleSystem { //<>//
       Particle p = particles.get(i);
       p.display();
       p.update();
-      if (p.gone()) {
+      if (p.lifespan == 0) {
         particles.remove(i);
       }
     }
