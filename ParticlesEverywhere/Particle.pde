@@ -3,9 +3,13 @@ class Particle {
   PVector velocity;
   PVector acceleration;
 
-  float topspeed = 5;
-
   int lifespan = 255;
+
+  float topspeed = 3;
+
+  float angle = 0;
+  float aVelocity = 0;
+  float aAcceleration = 0;
 
   // Decides wether fish appear from left side or right side of screen
   float leftOrRight() { 
@@ -22,49 +26,34 @@ class Particle {
 
 
   Particle() {
-    location = new PVector(leftOrRight(), random(height));
-    velocity = new PVector(0, 0);
-    acceleration = new PVector(0, 0);
-   
+    location = new PVector(leftOrRight(), random(0, height));
+    velocity = PVector.random2D();
+    acceleration = new PVector(random(0, 0.05), random(0, 0.05));
   }
-
-  void applyForce(PVector f) {
-    acceleration.add(f);
-  }
-
 
   void update() {
 
-
-    //PVector mousePos = new PVector(mouseX, mouseY);
-    //PVector dir = PVector.sub(mousePos, this.location);
-    //dir.normalize();
-    //dir.mult(0.3);
-    //this.acceleration = dir;
-
     this.velocity.add(this.acceleration);
-    this.velocity.limit(topspeed);
     this.location.add(this.velocity);
 
-    //if (this.location.x == mousePos.x) {
-    //  lifespan = 0;
-    //  println(lifespan);
-    //}
+    this.acceleration.mult(0);
+
+    lifespan -= 0.5;
   }
 
-  //boolean gone() {
-  //  if (lifespan < 0) {
-  //    return true;
-  //  } else {
-  //    return false;
-  //  }
-  //}
+  boolean gone() {
+    if (lifespan == 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   void display() {
     float angle = velocity.heading();
 
     noStroke();
-    fill(175);
+    fill(175, lifespan);
     pushMatrix();
     rectMode(CENTER);
     translate(location.x, location.y);
