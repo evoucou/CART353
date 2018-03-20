@@ -18,13 +18,18 @@ var fps;
 var colorDisplay;
 var typing = false;
 var timer;
+var waterMeter;
 var typingDelay = 0;
+
+var spawnCount = 15;
+var liters = 0;
 
 
 function setup() {
-  
+
   // We create a paragraph to display the timer
   timer = createP('timer');
+  waterMeter = createP('water meter');
 
   createCanvas(windowWidth, windowHeight);
 
@@ -36,8 +41,6 @@ function setup() {
 
 function draw() {
   background(0, 150);
-  
-  var spawnCount = 20;
 
   colorMode(HSB, 360);
 
@@ -66,18 +69,20 @@ function draw() {
     // If particles almost at bottom of screen, they lose opacity and disappear.
     if (particles[i].pos.y > windowHeight - 50) {
       particles[i].alpha -= 25;
+      liters++;
     } else {
-    // Else, if not at bottom, they have to move and are at full opacity.
+      // Else, if not at bottom, they have to move and are at full opacity.
       particles[i].alpha = 255;
       particles[i].move();
     }
+    waterMeter.html(liters);
+
     // This function deletes particles that disappeared at the bottom (no opacity).
     // Else, particles are spawned continuously and accumulate, so the webpage becomes slower and slower as there are too many particles.
     if (particles[i].alpha < 0) {
       particles.splice(i, 1);
     }
   }
-
 
   // Avoid updating frame rate every frame (not as readable).
   if (frameCount % 10 == 0) {
@@ -94,7 +99,7 @@ function keyPressed() {
 }
 
 function keyReleased() {
-  
+
   // When user releases a key, typing becomes false and we start the timer with setInterval.
   console.log('released');
   typing = false;
@@ -102,7 +107,7 @@ function keyReleased() {
 }
 
 function timeIt() {
-  
+
   // Timer function. When it's running, it counts down to 0 and then clears.
   timer.html(typingDelay);
 
