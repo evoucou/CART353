@@ -3,17 +3,17 @@
 function Animal(x, y) {
 
   // We create its values
-  var vx
+  var vx = 10;
 
   this.x = x;
   this.y = y;
 
-  this.move = function() {
-
-    x += vx;
+  Animal.prototype.move = function() {
+    this.x += vx;
+    console.log("moving");
   }
 
-  this.display = function() { 
+  Animal.prototype.display = function() { 
 
     // Display the particles
     ellipse(this.x, this.y, 10, 10);

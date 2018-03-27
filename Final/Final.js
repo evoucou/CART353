@@ -14,7 +14,7 @@ var waterfallMax;
 var lion;
 var giraffe;
 var elephant;
-var animals;
+var e;
 
 var particles = [];
 var bottomCollision;
@@ -31,6 +31,8 @@ var liters = 0;
 
 
 function setup() {
+
+  e = new Elephant(width/2, height/2);
 
   // We create a paragraph to display the timer
   timer = createP('timer');
@@ -71,10 +73,8 @@ function draw() {
 
   colorMode(RGB, 255);
 
-  animals = new Animal(width/2, height/2);
-
-  animals.display();
-  animals.move();
+  e.display();
+  e.move();
 
   // Here, the loop looks like this because we are checking the particles in reverse.
   // We have to do this, or else, we will skip a 'number' in our array, since we are deleting one with splice.
@@ -139,6 +139,29 @@ function keyReleased() {
 
 
 
+
+//// Child class constructor
+//function Confetti(position) {
+//  Particle.call(this,position);
+//}
+
+//// Inherit from the parent class
+//Confetti.prototype = Object.create(Particle.prototype);
+//Confetti.prototype.constructor = Confetti;
+
+//// Override the display method
+//Confetti.prototype.display = function(){
+//    rectMode(CENTER);
+//    fill(127,this.lifespan);
+//    stroke(0,this.lifespan);
+//    strokeWeight(2);
+//    pushMatrix();
+//    translate(this.position.x,this.position.y);
+//    var theta = map(this.position.x,0,width,0,TWO_PI*2);
+//    rotate(theta);
+//    rect(0,0,12,12);
+//    popMatrix();
+//}
 
 
 
