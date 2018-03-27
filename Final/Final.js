@@ -11,6 +11,11 @@ var interval ;
 var waterfallMin;
 var waterfallMax;
 
+var lion;
+var giraffe;
+var elephant;
+var animals;
+
 var particles = [];
 var bottomCollision;
 
@@ -36,6 +41,13 @@ function setup() {
   // Variables which determine width and height of waterfall
   waterfallMin = width/2.6;
   waterfallMax = width-width/2.6;
+
+  p5.Vector.prototype.double = function() {
+  }
+
+  //lion = new Lion(100,height);
+  //giraffe = new Giraffe(100,height);
+  //elephant = new Elephant(100,height);
 }
 
 
@@ -58,6 +70,11 @@ function draw() {
   }
 
   colorMode(RGB, 255);
+
+  animals = new Animal(width/2, height/2);
+
+  animals.display();
+  animals.move();
 
   // Here, the loop looks like this because we are checking the particles in reverse.
   // We have to do this, or else, we will skip a 'number' in our array, since we are deleting one with splice.
@@ -90,6 +107,20 @@ function draw() {
   }
 }
 
+function timeIt() {
+
+  // Timer function. When it's running, it counts down to 0 and then clears.
+  timer.html(typingDelay);
+
+  if (typingDelay == 0)
+  {
+    clearInterval(interval);
+  } else {
+    typingDelay--;
+  }
+}
+
+
 function keyPressed() {
   // When user presses a key, typing becomes true, the previous timer count is cleared and we reset it.
   console.log('pressed');
@@ -106,18 +137,9 @@ function keyReleased() {
   interval = setInterval(timeIt, 1000);
 }
 
-function timeIt() {
 
-  // Timer function. When it's running, it counts down to 0 and then clears.
-  timer.html(typingDelay);
 
-  if (typingDelay == 0)
-  {
-    clearInterval(interval);
-  } else {
-    typingDelay--;
-  }
-}
+
 
 
 /*
