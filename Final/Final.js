@@ -13,7 +13,6 @@ var waterfallMax;
 
 var lion;
 var giraffe;
-var elephant;
 var e;
 
 var particles = [];
@@ -29,10 +28,25 @@ var typingDelay = 0;
 var spawnCount = 15;
 var liters = 0;
 
+var elephantImg = [];
+
 
 function setup() {
 
-  e = new Elephant(width/2, height/2);
+  //elephantImg[0] = loadImage("data/elephant-01.png");
+  //elephantImg[1] = loadImage("data/elephant-02.png");
+  //elephantImg[2] = loadImage("data/elephant-03.png");
+  //elephantImg[3] = loadImage("data/elephant-04.png");
+  //elephantImg[4] = loadImage("data/elephant-05.png");
+  //elephantImg[5] = loadImage("data/elephant-06.png");
+  //elephantImg[6] = loadImage("data/elephant-07.png");
+  //elephantImg[7] = loadImage("data/elephant-08.png");
+  //elephantImg[8] = loadImage("data/elephant-09.png");
+  //elephantImg[9] = loadImage("data/elephant-10.png");
+  //elephantImg[10] = loadImage("data/elephant-11.png");
+  //elephantImg[11] = loadImage("data/elephant-12.png");
+
+  e = new Elephant(0, height/2, "elephant");
 
   // We create a paragraph to display the timer
   timer = createP('timer');
@@ -44,8 +58,6 @@ function setup() {
   waterfallMin = width/2.6;
   waterfallMax = width-width/2.6;
 
-  p5.Vector.prototype.double = function() {
-  }
 
   //lion = new Lion(100,height);
   //giraffe = new Giraffe(100,height);
@@ -54,6 +66,11 @@ function setup() {
 
 
 function draw() {
+
+  //for (var i = 0; i < 11; i++) {
+  //  elephant = new Elephant(0, height/2, elephantImg[i]);
+  //}
+
   background(0, 150);
 
   colorMode(HSB, 360);
@@ -72,9 +89,6 @@ function draw() {
   }
 
   colorMode(RGB, 255);
-
-  e.display();
-  e.move();
 
   // Here, the loop looks like this because we are checking the particles in reverse.
   // We have to do this, or else, we will skip a 'number' in our array, since we are deleting one with splice.
@@ -99,6 +113,12 @@ function draw() {
     if (particles[i].alpha < 0) {
       particles.splice(i, 1);
     }
+  }
+
+  e.display();
+  if (liters > 2000) {
+    e.move();
+    //elephant.display();
   }
 
   // Avoid updating frame rate every frame (not as readable).
@@ -136,8 +156,6 @@ function keyReleased() {
   typing = false;
   interval = setInterval(timeIt, 1000);
 }
-
-
 
 
 //// Child class constructor
