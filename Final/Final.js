@@ -35,8 +35,6 @@ var textfield;
 
 function setup() {
 
-  e.setupImages();
-
   //elephantImg[0] = loadImage("data/elephant-01.png");
   //elephantImg[1] = loadImage("data/elephant-02.png");
   //elephantImg[2] = loadImage("data/elephant-03.png");
@@ -119,11 +117,10 @@ function draw() {
       particles.splice(i, 1);
     }
   }
-
-  e.display();
+  e.setupImages();
+  //e.display();
   if (liters > 2000) {
     e.move();
-    e.loadImageElement(filename);
     //elephant.display();
   }
 

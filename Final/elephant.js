@@ -1,7 +1,7 @@
 // Elephant child class
 
 function Elephant(x, y, string) {
-  Animal.call(x,y, string);
+  Animal.call(x, y, string);
   this.x = x;
   this.y = y;
   this.string = string;

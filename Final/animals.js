@@ -3,9 +3,10 @@
 function Animal(x, y, string) {
 
   // We create its values
-  var img = []
+  var images = []
     var totalImages = 12;
   var counterImage = 0;
+  var loadingImage = false;
 
   var vx = 3;
 
@@ -13,7 +14,7 @@ function Animal(x, y, string) {
   this.y = y;
   this.string = string;
 
-  function Animal.prototype.move() {
+  Animal.prototype.move = function() {
     this.x += vx;
 
     //img[0] = loadImage("data/", string, "-01.png");
@@ -31,33 +32,34 @@ function Animal(x, y, string) {
 
     //for (var i = 0; i < 11; i++) {
     //  image(this.img[i], this.x, this.y);
-    
+    //}
   }
-}
 
-function Animal.prototype.loadImageElement(filename) {
 
-  loadImage(filename, imageLoaded);
+  Animal.prototype.loadImageElement = function(filename) {
 
-  function imageLoaded(image) {
-    console.log(filename);
-    images.push(image);
-    counterImage++;
-    if (counterImage == totalImages) {
-      loadingImage = true;
+    loadImage(filename, imageLoaded);
+
+    function imageLoaded(image) {
+      console.log(filename);
+     images.push(image);
+      counterImage++;
+      if (counterImage == totalImages) {
+        loadingImage = true;
+      }
     }
   }
-}
 
-function Animal.prototype.setupImages() {
-  for (var i = 1; i <= totalImages; i++) {
-    loadImageElement("data/" string + i + ".png");
+  Animal.prototype.setupImages = function() {
+    for (var i = 1; i <= totalImages; i++) {
+      this.loadImageElement("data/" + this.string + i + ".png");
+    }
   }
-}
 
-function Animal.prototype.display() { 
 
-  rect(this.x, this.y, 50, 50);
-  stroke(255);
-}
+  Animal.prototype.display = function() { 
+
+    rect(this.x, this.y, 50, 50);
+    stroke(255);
+  }
 }
