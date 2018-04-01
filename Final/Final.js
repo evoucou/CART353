@@ -30,8 +30,12 @@ var liters = 0;
 
 var elephantImg = [];
 
+var textfield;
+
 
 function setup() {
+
+  e.setupImages();
 
   //elephantImg[0] = loadImage("data/elephant-01.png");
   //elephantImg[1] = loadImage("data/elephant-02.png");
@@ -51,8 +55,9 @@ function setup() {
   // We create a paragraph to display the timer
   timer = createP('timer');
   waterMeter = createP('water meter');
+  textfield = select("textfield");
 
-  createCanvas(windowWidth, windowHeight);
+  canvas = createCanvas(windowWidth, windowHeight);
 
   // Variables which determine width and height of waterfall
   waterfallMin = width/2.6;
@@ -118,6 +123,7 @@ function draw() {
   e.display();
   if (liters > 2000) {
     e.move();
+    e.loadImageElement(filename);
     //elephant.display();
   }
 
