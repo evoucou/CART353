@@ -69,12 +69,38 @@ function setup() {
 
 
 function draw() {
-
-  //for (var i = 0; i < 11; i++) {
-  //  elephant = new Elephant(0, height/2, elephantImg[i]);
-  //}
+  
+  //e.preload();
 
   background(0, 150);
+
+  spawnParticles();
+
+  if (liters > 400) {
+    //e.preload();
+    e.move();
+  }
+
+  // Avoid updating frame rate every frame (not as readable).
+  if (frameCount % 10 == 0) {
+    fps = frameRate().toFixed(2);
+  }
+}
+
+function timeIt() {
+
+  // Timer function. When it's running, it counts down to 0 and then clears.
+  timer.html(typingDelay);
+
+  if (typingDelay == 0)
+  {
+    clearInterval(interval);
+  } else {
+    typingDelay--;
+  }
+}
+
+function spawnParticles() {
 
   colorMode(HSB, 360);
 
@@ -117,32 +143,7 @@ function draw() {
       particles.splice(i, 1);
     }
   }
-  e.setupImages();
-  //e.display();
-  if (liters > 2000) {
-    e.move();
-    //elephant.display();
-  }
-
-  // Avoid updating frame rate every frame (not as readable).
-  if (frameCount % 10 == 0) {
-    fps = frameRate().toFixed(2);
-  }
 }
-
-function timeIt() {
-
-  // Timer function. When it's running, it counts down to 0 and then clears.
-  timer.html(typingDelay);
-
-  if (typingDelay == 0)
-  {
-    clearInterval(interval);
-  } else {
-    typingDelay--;
-  }
-}
-
 
 function keyPressed() {
   // When user presses a key, typing becomes true, the previous timer count is cleared and we reset it.
@@ -159,31 +160,6 @@ function keyReleased() {
   typing = false;
   interval = setInterval(timeIt, 1000);
 }
-
-
-//// Child class constructor
-//function Confetti(position) {
-//  Particle.call(this,position);
-//}
-
-//// Inherit from the parent class
-//Confetti.prototype = Object.create(Particle.prototype);
-//Confetti.prototype.constructor = Confetti;
-
-//// Override the display method
-//Confetti.prototype.display = function(){
-//    rectMode(CENTER);
-//    fill(127,this.lifespan);
-//    stroke(0,this.lifespan);
-//    strokeWeight(2);
-//    pushMatrix();
-//    translate(this.position.x,this.position.y);
-//    var theta = map(this.position.x,0,width,0,TWO_PI*2);
-//    rotate(theta);
-//    rect(0,0,12,12);
-//    popMatrix();
-//}
-
 
 
 /*
