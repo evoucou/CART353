@@ -39,20 +39,20 @@ var pulse = 1;
 var inside = false;
 var distance;
 
-var insideLeft;
-var insideRight;
-var insideTop;
-var insideBottom;
-
 // <textarea id="textfield"></textarea>
+
 
 function setup() {
 
   createCanvas(windowWidth, windowHeight);
 
-  this.elephant = new Elephant(45, height/2, "elephant");
+  elephant = new Animal(45, height/2, "elephant");
 
   waterIcon = loadImage("data/waterdrop.png");
+  
+  elephant.load();
+
+  //this.elephant.preload();
 
   // We create a paragraph to display the timer
   //waterMeter = liters;
@@ -60,14 +60,13 @@ function setup() {
 
   textfield = createInput('');
   textfield.size(500, 620);
-  textfield.position((windowWidth - (650 + 400 + 500)), 100);
+  textfield.position((width - (650 + 400 + 500)), 100);
 
   textfield.input(myInputEvent);
 
   // Variables which determine width and height of waterfall
   waterfallMin = width-780;
   waterfallMax = width-400;
-
 
   //lion = new Lion(100,height);
   //giraffe = new Giraffe(100,height);
@@ -90,10 +89,10 @@ function draw() {
   //distance = dist(mouseX, mouseY, textfield.x, textfield.y);
   ////console.log(distance);
 
-  insideLeft = (textfield.x < mouseX);
-  insideRight = (textfield.x + textfield.width > mouseX);
-  insideTop = (textfield.y < mouseY);
-  insideBottom = (textfield.y + textfield.height > mouseY);
+  //insideLeft = (textfield.x < mouseX);
+  //insideRight = (textfield.x + textfield.width > mouseX);
+  //insideTop = (textfield.y < mouseY);
+  //insideBottom = (textfield.y + textfield.height > mouseY);
   //console.log("mouseX " + mouseX + " textfield.x " + textfield.x);
   // console.log("mouseY " + mouseY + " textfield.y " + textfield.y);
 
@@ -102,9 +101,11 @@ function draw() {
 
   spawnParticles();
 
-  this.elephant.display();
+ // animation(this.walk, 200, 200);
+
+  //elephant.display();
   if (mL > 10) {
-    this.elephant.move();
+    elephant.move();
   }
 
   // Avoid updating frame rate every frame (not as readable).
