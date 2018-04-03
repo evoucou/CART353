@@ -32,25 +32,14 @@ var waterIcon;
 
 var textfield;
 
+var value = 20;
+var pulse = 1;
 
+var pulseBoolean;
 
+// <textarea id="textfield"></textarea>
 
 function setup() {
-
-  //elephantImg[0] = loadImage("data/elephant-01.png");
-  //elephantImg[1] = loadImage("data/elephant-02.png");
-  //elephantImg[2] = loadImage("data/elephant-03.png");
-  //elephantImg[3] = loadImage("data/elephant-04.png");
-  //elephantImg[4] = loadImage("data/elephant-05.png");
-  //elephantImg[5] = loadImage("data/elephant-06.png");
-  //elephantImg[6] = loadImage("data/elephant-07.png");
-  //elephantImg[7] = loadImage("data/elephant-08.png");
-  //elephantImg[8] = loadImage("data/elephant-09.png");
-  //elephantImg[9] = loadImage("data/elephant-10.png");
-  //elephantImg[10] = loadImage("data/elephant-11.png");
-  //elephantImg[11] = loadImage("data/elephant-12.png");
-
-  smooth()
 
     e = new Elephant(0, height/2, "elephant");
 
@@ -59,13 +48,18 @@ function setup() {
   // We create a paragraph to display the timer
   //waterMeter = liters;
   //timer = typingDelay;
-  textfield = select("textfield");
 
-  canvas = createCanvas(windowWidth, windowHeight);
+  textfield = createInput('');
+  textfield.size(500, 620);
+  textfield.position((windowWidth - (650 + 400 + 500)), height);
+
+  textfield.input(myInputEvent);
+
+  createCanvas(windowWidth, windowHeight);
 
   // Variables which determine width and height of waterfall
-  waterfallMin = width-650;
-  waterfallMax = width-300;
+  waterfallMin = width-780;
+  waterfallMax = width-400;
 
 
   //lion = new Lion(100,height);
@@ -73,12 +67,17 @@ function setup() {
   //elephant = new Elephant(100,height);
 }
 
+function myInputEvent() {
+  console.log("you are typing", this.value());
+}
+
 
 function draw() {
 
-  //e.preload();
-
   background(0, 150);
+
+
+  //e.preload();
 
   imageMode(CENTER);
   image(waterIcon, width-157, 47);
@@ -135,56 +134,79 @@ function spawnParticles() {
 
       if (typingDelay < 4) {
 
-        var size = 100;
-        var pulse = 1;
+        //if (value > 29) {
+        //  pulse = 0;
+        //  console.log("size: " + value + " pulse " + pulse);
+        //} else if (value < 21) {
+        //  pulse = 1;
+        //  console.log("size: " + value + " pulse " + pulse);
+        //}
 
-        if (size > 199) {
-          pulse = 0;
-        } else if (size < 101) {
-          pulse = 1;
+        //if (pulse = 1) {
+        //  value += 2;
+        //   console.log("+2 called");
+        //} else if (pulse = 0) {
+        //  value -= 2;
+        //  console.log("-2 called");
+        //}
+
+        pulseBoolean = true;
+
+        if (pulseBoolean) {
+          value += 2;
+          console.log("pusleBoolean true");
+          if (value = 30) {
+            console.log("value = 30");
+            pulseBoolean = false;
+          }
+        } else {
+          pulseBoolean = false;
         }
 
-        if (pulse = 1) {
-          size += 2;
-          //console.log("textSize + 2: " +  textSize);
-        } else if (pulse = 0) {
-          size -= 2;
-          //console.log("textSize - 2: "+ textSize);
+        if (!pulseBoolean) {
+          value -= 2;
+          console.log("pusleBoolean false");
+          if (value = 20) {
+            console.log("value = 20");
+            pulseBoolean = true;
+          }
         }
 
-      textSize(size);
-      text("Keep typing!", width/2 - 45, height/2 - 50);
+        console.log(value);
+        //console.log(pulse);
+        textSize(value);
+        text("Keep typing!", width/2 - 45, height/2 - 50);
+      }
     }
   }
-}
 
-colorMode(RGB, 255);
+  colorMode(RGB, 255);
 
-// Here, the loop looks like this because we are checking the particles in reverse.
-// We have to do this, or else, we will skip a 'number' in our array, since we are deleting one with splice.
-for (var i = particles.length-1; i > -1; i--) {
+  // Here, the loop looks like this because we are checking the particles in reverse.
+  // We have to do this, or else, we will skip a 'number' in our array, since we are deleting one with splice.
+  for (var i = particles.length-1; i > -1; i--) {
 
-  // Always display particles
-  particles[i].display();
+    // Always display particles
+    particles[i].display();
 
-  // If particles almost at bottom of screen, they lose opacity and disappear.
-  if (particles[i].pos.y > windowHeight - 70) {
-    particles[i].alpha -= 25;
-    liters++;
-  } else {
-    // Else, if not at bottom, they have to move and are at full opacity.
-    particles[i].alpha = 255;
-    particles[i].move();
+    // If particles almost at bottom of screen, they lose opacity and disappear.
+    if (particles[i].pos.y > windowHeight - 70) {
+      particles[i].alpha -= 25;
+      liters++;
+    } else {
+      // Else, if not at bottom, they have to move and are at full opacity.
+      particles[i].alpha = 255;
+      particles[i].move();
+    }
+
+    //console.log("liters " + liters);
+
+    // This function deletes particles that disappeared at the bottom (no opacity).
+    // Else, particles are spawned continuously and accumulate, so the webpage becomes slower and slower as there are too many particles.
+    if (particles[i].alpha < 0) {
+      particles.splice(i, 1);
+    }
   }
-
-  //console.log("liters " + liters);
-
-  // This function deletes particles that disappeared at the bottom (no opacity).
-  // Else, particles are spawned continuously and accumulate, so the webpage becomes slower and slower as there are too many particles.
-  if (particles[i].alpha < 0) {
-    particles.splice(i, 1);
-  }
-}
 }
 
 //function pulse() {
