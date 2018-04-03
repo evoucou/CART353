@@ -75,7 +75,11 @@ function setup() {
 }
 
 function myInputEvent() {
-  console.log("you are typing", this.value());
+  //console.log("you are typing", this.value());
+  console.log('pressed');
+  typing = true;
+  typingDelay = 8;
+  clearInterval(interval);
 }
 
 
@@ -209,15 +213,15 @@ function spawnParticles() {
 //  }
 //}
 
-function keyPressed() {
-  if (insideLeft && insideRight && insideTop && insideBottom) {
-    // When user presses a key, typing becomes true, the previous timer count is cleared and we reset it. 
-    console.log('pressed');
-    typingDelay = 8;
-    typing = true;
-    clearInterval(interval);
-  }
-}
+//function keyPressed() {
+//  if (insideLeft && insideRight && insideTop && insideBottom) {
+//    // When user presses a key, typing becomes true, the previous timer count is cleared and we reset it. 
+//    //console.log('pressed');
+//    //typingDelay = 8;
+//    //typing = true;
+//    //clearInterval(interval);
+//  }
+//}
 
 function keyReleased() {
 
