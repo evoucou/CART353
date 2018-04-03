@@ -13,7 +13,7 @@ var waterfallMax;
 
 var lion;
 var giraffe;
-var e;
+var elephant;
 
 var particles = [];
 var bottomCollision;
@@ -26,7 +26,8 @@ var typing = false;
 var typingDelay = 0;
 
 var spawnCount = 11;
-var liters = 0;
+var mL = 0;
+var liters;
 
 var waterIcon;
 
@@ -41,7 +42,9 @@ var pulseBoolean;
 
 function setup() {
 
-    e = new Elephant(0, height/2, "elephant");
+  createCanvas(windowWidth, windowHeight);
+
+  this.elephant = new Elephant(45, height/2, "elephant");
 
   waterIcon = loadImage("data/waterdrop.png");
 
@@ -54,8 +57,6 @@ function setup() {
   textfield.position((windowWidth - (650 + 400 + 500)), height);
 
   textfield.input(myInputEvent);
-
-  createCanvas(windowWidth, windowHeight);
 
   // Variables which determine width and height of waterfall
   waterfallMin = width-780;
@@ -76,17 +77,14 @@ function draw() {
 
   background(0, 150);
 
-
-  //e.preload();
-
   imageMode(CENTER);
   image(waterIcon, width-157, 47);
 
   spawnParticles();
 
-  if (liters > 400) {
-    //e.preload();
-    //e.move();
+  this.elephant.display();
+  if (mL > 10) {
+    this.elephant.move();
   }
 
   // Avoid updating frame rate every frame (not as readable).
@@ -110,9 +108,11 @@ function timeIt() {
 
 function spawnParticles() {
 
+  //liters = mL % 1000;
+
   textSize(24);
   fill(255);
-  text(liters, width-135, 55);
+  text(mL, width-135, 55);
 
   colorMode(HSB, 360);
 
@@ -134,43 +134,43 @@ function spawnParticles() {
 
       if (typingDelay < 4) {
 
-        //if (value > 29) {
-        //  pulse = 0;
-        //  console.log("size: " + value + " pulse " + pulse);
-        //} else if (value < 21) {
-        //  pulse = 1;
-        //  console.log("size: " + value + " pulse " + pulse);
-        //}
+        if (value > 29) {
+          pulse = 0;
+          console.log("size: " + value + " pulse " + pulse);
+        } else if (value < 21) {
+          pulse = 1;
+          console.log("size: " + value + " pulse " + pulse);
+        }
 
-        //if (pulse = 1) {
-        //  value += 2;
-        //   console.log("+2 called");
-        //} else if (pulse = 0) {
-        //  value -= 2;
-        //  console.log("-2 called");
-        //}
-
-        pulseBoolean = true;
-
-        if (pulseBoolean) {
+        if (pulse == 1) {
           value += 2;
-          console.log("pusleBoolean true");
-          if (value = 30) {
-            console.log("value = 30");
-            pulseBoolean = false;
-          }
-        } else {
-          pulseBoolean = false;
+          console.log("+2 called");
+        } else if (pulse == 0) {
+          value -= 2;
+          console.log("-2 called");
         }
 
-        if (!pulseBoolean) {
-          value -= 2;
-          console.log("pusleBoolean false");
-          if (value = 20) {
-            console.log("value = 20");
-            pulseBoolean = true;
-          }
-        }
+        //pulseBoolean = true;
+
+        //if (pulseBoolean) {
+        //  value += 2;
+        //  console.log("pusleBoolean true");
+        //  if (value = 30) {
+        //    console.log("value = 30");
+        //    pulseBoolean = false;
+        //  }
+        //} else {
+        //  pulseBoolean = false;
+        //}
+
+        //if (!pulseBoolean) {
+        //  value -= 2;
+        //  console.log("pusleBoolean false");
+        //  if (value = 20) {
+        //    console.log("value = 20");
+        //    pulseBoolean = true;
+        //  }
+        //}
 
         console.log(value);
         //console.log(pulse);
@@ -192,7 +192,7 @@ function spawnParticles() {
     // If particles almost at bottom of screen, they lose opacity and disappear.
     if (particles[i].pos.y > windowHeight - 70) {
       particles[i].alpha -= 25;
-      liters++;
+      mL++;
     } else {
       // Else, if not at bottom, they have to move and are at full opacity.
       particles[i].alpha = 255;
