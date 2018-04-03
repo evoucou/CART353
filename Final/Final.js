@@ -36,7 +36,13 @@ var textfield;
 var value = 20;
 var pulse = 1;
 
-var pulseBoolean;
+var inside = false;
+var distance;
+
+var insideLeft;
+var insideRight;
+var insideTop;
+var insideBottom;
 
 // <textarea id="textfield"></textarea>
 
@@ -54,7 +60,7 @@ function setup() {
 
   textfield = createInput('');
   textfield.size(500, 620);
-  textfield.position((windowWidth - (650 + 400 + 500)), height);
+  textfield.position((windowWidth - (650 + 400 + 500)), 100);
 
   textfield.input(myInputEvent);
 
@@ -76,6 +82,16 @@ function myInputEvent() {
 function draw() {
 
   background(0, 150);
+
+  //distance = dist(mouseX, mouseY, textfield.x, textfield.y);
+  ////console.log(distance);
+
+  insideLeft = (textfield.x < mouseX);
+  insideRight = (textfield.x + textfield.width > mouseX);
+  insideTop = (textfield.y < mouseY);
+  insideBottom = (textfield.y + textfield.height > mouseY);
+  //console.log("mouseX " + mouseX + " textfield.x " + textfield.x);
+  // console.log("mouseY " + mouseY + " textfield.y " + textfield.y);
 
   imageMode(CENTER);
   image(waterIcon, width-157, 47);
@@ -134,46 +150,22 @@ function spawnParticles() {
 
       if (typingDelay < 4) {
 
-        if (value > 29) {
+        if (value > 25) {
           pulse = 0;
-          console.log("size: " + value + " pulse " + pulse);
+          console.log("pulse: " + pulse + "value " + value);
         } else if (value < 21) {
-          pulse = 1;
-          console.log("size: " + value + " pulse " + pulse);
+          if (value > 19) { 
+            pulse = 1;
+            console.log("pulse: " + pulse + "value " + value);
+          }
         }
 
         if (pulse == 1) {
           value += 2;
-          console.log("+2 called");
         } else if (pulse == 0) {
-          value -= 2;
-          console.log("-2 called");
+          value = 20;
         }
 
-        //pulseBoolean = true;
-
-        //if (pulseBoolean) {
-        //  value += 2;
-        //  console.log("pusleBoolean true");
-        //  if (value = 30) {
-        //    console.log("value = 30");
-        //    pulseBoolean = false;
-        //  }
-        //} else {
-        //  pulseBoolean = false;
-        //}
-
-        //if (!pulseBoolean) {
-        //  value -= 2;
-        //  console.log("pusleBoolean false");
-        //  if (value = 20) {
-        //    console.log("value = 20");
-        //    pulseBoolean = true;
-        //  }
-        //}
-
-        console.log(value);
-        //console.log(pulse);
         textSize(value);
         text("Keep typing!", width/2 - 45, height/2 - 50);
       }
@@ -190,7 +182,7 @@ function spawnParticles() {
     particles[i].display();
 
     // If particles almost at bottom of screen, they lose opacity and disappear.
-    if (particles[i].pos.y > windowHeight - 70) {
+    if (particles[i].pos.y > height - 100) {
       particles[i].alpha -= 25;
       mL++;
     } else {
@@ -198,8 +190,6 @@ function spawnParticles() {
       particles[i].alpha = 255;
       particles[i].move();
     }
-
-    //console.log("liters " + liters);
 
     // This function deletes particles that disappeared at the bottom (no opacity).
     // Else, particles are spawned continuously and accumulate, so the webpage becomes slower and slower as there are too many particles.
@@ -209,35 +199,24 @@ function spawnParticles() {
   }
 }
 
-//function pulse() {
+//function insideBox() {
+//  console.log('inside')
 
-//  var index;
-//  var textSize = 100;
-//  var pulse = 1;
-
-//  if (textSize > 199) {
-//    pulse = 0;
-//  } else if (textSize < 101) {
-//    pulse = 1;
+//    if (insideLeft && insideRight && insideTop && insideBottom) {
+//    inside = true;
+//  } else {
+//    inside = false;
 //  }
-
-//  if (pulse == 1) {
-//    textSize += 2;
-//    console.log("textSize + 2: " +  textSize);
-//  } else if (pulse == 0) {
-//    textSize -= 2;
-//    console.log("textSize - 2: "+ textSize);
-//  }
-//}
-//return textSize;
 //}
 
 function keyPressed() {
-  // When user presses a key, typing becomes true, the previous timer count is cleared and we reset it.
-  console.log('pressed');
-  typingDelay = 8;
-  typing = true;
-  clearInterval(interval);
+  if (insideLeft && insideRight && insideTop && insideBottom) {
+    // When user presses a key, typing becomes true, the previous timer count is cleared and we reset it. 
+    console.log('pressed');
+    typingDelay = 8;
+    typing = true;
+    clearInterval(interval);
+  }
 }
 
 function keyReleased() {
