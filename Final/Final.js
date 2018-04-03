@@ -32,6 +32,8 @@ var liters;
 var waterIcon;
 
 var textfield;
+var saveButton;
+var copyButton;
 
 var value = 20;
 var pulse = 1;
@@ -39,17 +41,20 @@ var pulse = 1;
 var inside = false;
 var distance;
 
+var keyIsReleased;
+
 // <textarea id="textfield"></textarea>
 
 
 function setup() {
 
-  createCanvas(windowWidth, windowHeight);
+  var canvas = createCanvas(windowWidth, windowHeight);
+  canvas.style('display', 'block');
 
   elephant = new Animal(45, height/2, "elephant");
 
   waterIcon = loadImage("data/waterdrop.png");
-  
+
   elephant.load();
 
   //this.elephant.preload();
@@ -58,19 +63,36 @@ function setup() {
   //waterMeter = liters;
   //timer = typingDelay;
 
+
   textfield = createInput('');
   textfield.size(500, 620);
   textfield.position((width - (650 + 400 + 500)), 100);
-
   textfield.input(myInputEvent);
+
+  saveButton = createButton('save');
+  saveButton.position((textfield.x + textfield.width/3) - saveButton.width/2, (textfield.y + textfield.height) + 20);
+  saveButton.size(100, 30);
+  saveButton.mousePressed(userCopy);
+
+  copyButton = createButton('copy');
+  copyButton.position((textfield.x + textfield.width/2) + copyButton.width/2, (textfield.y + textfield.height) + 20);
+  copyButton.size(100, 30);
+  copyButton.mousePressed(userSave);
 
   // Variables which determine width and height of waterfall
   waterfallMin = width-780;
   waterfallMax = width-400;
+}
 
-  //lion = new Lion(100,height);
-  //giraffe = new Giraffe(100,height);
-  //elephant = new Elephant(100,height);
+function userSave() {
+  console.log("save");
+}
+function userCopy() {
+  console.log("copy");
+}
+
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
 }
 
 function myInputEvent() {
@@ -79,6 +101,17 @@ function myInputEvent() {
   typing = true;
   typingDelay = 8;
   clearInterval(interval);
+
+  if (keyIsReleased) {
+    // When user releases a key, typing becomes false and we start the timer with setInterval.
+    console.log('released');
+    typing = false;
+    interval = setInterval(timeIt, 1000);
+  }
+}
+
+function constrained() {
+  this.value.position(textfield.x, (textfield.x + textfield.width))
 }
 
 
@@ -100,8 +133,6 @@ function draw() {
   image(waterIcon, width-157, 47);
 
   spawnParticles();
-
- // animation(this.walk, 200, 200);
 
   //elephant.display();
   if (mL > 10) {
@@ -225,11 +256,7 @@ function spawnParticles() {
 //}
 
 function keyReleased() {
-
-  // When user releases a key, typing becomes false and we start the timer with setInterval.
-  console.log('released');
-  typing = false;
-  interval = setInterval(timeIt, 1000);
+  keyIsReleased = true;
 }
 
 
