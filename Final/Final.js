@@ -21,16 +21,18 @@ var bottomCollision;
 var fps;
 var colorDisplay;
 var typing = false;
-var timer;
-var waterMeter;
+//var timer;
+//var waterMeter;
 var typingDelay = 0;
 
-var spawnCount = 15;
+var spawnCount = 11;
 var liters = 0;
 
-var elephantImg = [];
+var waterIcon;
 
 var textfield;
+
+
 
 
 function setup() {
@@ -48,18 +50,22 @@ function setup() {
   //elephantImg[10] = loadImage("data/elephant-11.png");
   //elephantImg[11] = loadImage("data/elephant-12.png");
 
-  e = new Elephant(0, height/2, "elephant");
+  smooth()
+
+    e = new Elephant(0, height/2, "elephant");
+
+  waterIcon = loadImage("data/waterdrop.png");
 
   // We create a paragraph to display the timer
-  timer = createP('timer');
-  waterMeter = createP('water meter');
+  //waterMeter = liters;
+  //timer = typingDelay;
   textfield = select("textfield");
 
   canvas = createCanvas(windowWidth, windowHeight);
 
   // Variables which determine width and height of waterfall
-  waterfallMin = width/2.6;
-  waterfallMax = width-width/2.6;
+  waterfallMin = width-650;
+  waterfallMax = width-300;
 
 
   //lion = new Lion(100,height);
@@ -69,16 +75,19 @@ function setup() {
 
 
 function draw() {
-  
+
   //e.preload();
 
   background(0, 150);
+
+  imageMode(CENTER);
+  image(waterIcon, width-157, 47);
 
   spawnParticles();
 
   if (liters > 400) {
     //e.preload();
-    e.move();
+    //e.move();
   }
 
   // Avoid updating frame rate every frame (not as readable).
@@ -90,7 +99,7 @@ function draw() {
 function timeIt() {
 
   // Timer function. When it's running, it counts down to 0 and then clears.
-  timer.html(typingDelay);
+  //console.log("typingdelay " + typingDelay);
 
   if (typingDelay == 0)
   {
@@ -101,6 +110,10 @@ function timeIt() {
 }
 
 function spawnParticles() {
+
+  textSize(24);
+  fill(255);
+  text(liters, width-135, 55);
 
   colorMode(HSB, 360);
 
@@ -115,40 +128,92 @@ function spawnParticles() {
       var newParticle = new Particle(x, 0, mass, displayColor);
       particles[particles.length] = newParticle;
     }
-  }
 
-  colorMode(RGB, 255);
+    textSize(50);
+    if (typingDelay < 6) {    
+      text(typingDelay, width/2, height/2 + 10);
 
-  // Here, the loop looks like this because we are checking the particles in reverse.
-  // We have to do this, or else, we will skip a 'number' in our array, since we are deleting one with splice.
-  for (var i = particles.length-1; i > -1; i--) {
+      if (typingDelay < 4) {
 
-    // Always display particles
-    particles[i].display();
+        var size = 100;
+        var pulse = 1;
 
-    // If particles almost at bottom of screen, they lose opacity and disappear.
-    if (particles[i].pos.y > windowHeight - 50) {
-      particles[i].alpha -= 25;
-      liters++;
-    } else {
-      // Else, if not at bottom, they have to move and are at full opacity.
-      particles[i].alpha = 255;
-      particles[i].move();
-    }
-    waterMeter.html(liters);
+        if (size > 199) {
+          pulse = 0;
+        } else if (size < 101) {
+          pulse = 1;
+        }
 
-    // This function deletes particles that disappeared at the bottom (no opacity).
-    // Else, particles are spawned continuously and accumulate, so the webpage becomes slower and slower as there are too many particles.
-    if (particles[i].alpha < 0) {
-      particles.splice(i, 1);
+        if (pulse = 1) {
+          size += 2;
+          //console.log("textSize + 2: " +  textSize);
+        } else if (pulse = 0) {
+          size -= 2;
+          //console.log("textSize - 2: "+ textSize);
+        }
+
+      textSize(size);
+      text("Keep typing!", width/2 - 45, height/2 - 50);
     }
   }
 }
 
+colorMode(RGB, 255);
+
+// Here, the loop looks like this because we are checking the particles in reverse.
+// We have to do this, or else, we will skip a 'number' in our array, since we are deleting one with splice.
+for (var i = particles.length-1; i > -1; i--) {
+
+  // Always display particles
+  particles[i].display();
+
+  // If particles almost at bottom of screen, they lose opacity and disappear.
+  if (particles[i].pos.y > windowHeight - 70) {
+    particles[i].alpha -= 25;
+    liters++;
+  } else {
+    // Else, if not at bottom, they have to move and are at full opacity.
+    particles[i].alpha = 255;
+    particles[i].move();
+  }
+
+  //console.log("liters " + liters);
+
+  // This function deletes particles that disappeared at the bottom (no opacity).
+  // Else, particles are spawned continuously and accumulate, so the webpage becomes slower and slower as there are too many particles.
+  if (particles[i].alpha < 0) {
+    particles.splice(i, 1);
+  }
+}
+}
+
+//function pulse() {
+
+//  var index;
+//  var textSize = 100;
+//  var pulse = 1;
+
+//  if (textSize > 199) {
+//    pulse = 0;
+//  } else if (textSize < 101) {
+//    pulse = 1;
+//  }
+
+//  if (pulse == 1) {
+//    textSize += 2;
+//    console.log("textSize + 2: " +  textSize);
+//  } else if (pulse == 0) {
+//    textSize -= 2;
+//    console.log("textSize - 2: "+ textSize);
+//  }
+//}
+//return textSize;
+//}
+
 function keyPressed() {
   // When user presses a key, typing becomes true, the previous timer count is cleared and we reset it.
   console.log('pressed');
-  typingDelay = 5;
+  typingDelay = 8;
   typing = true;
   clearInterval(interval);
 }
