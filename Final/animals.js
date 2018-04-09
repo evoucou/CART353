@@ -3,7 +3,7 @@ var walk;
 
 function Animal(x, y, id) {
 
-  this.vx = 3;
+  this.vx = 2;
 
   this.x = x;
   this.y = y;
@@ -15,14 +15,17 @@ function Animal(x, y, id) {
 
   this.move = function() {
     this.x += this.vx;
+    this.walk.play();
 
     animation(this.walk, this.x, this.y);
   }
 
-  this.display = function() { 
+  this.standing = function() { 
 
-    rect(this.x, this.y, 50, 50);
-    stroke(255);
+    this.walk.goToFrame(0);
+    this.walk.stop();
+
+    animation(this.walk, this.x, this.y);
   }
 }
 

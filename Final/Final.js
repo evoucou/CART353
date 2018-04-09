@@ -25,11 +25,14 @@ var typing = false;
 //var waterMeter;
 var typingDelay = 0;
 
-var spawnCount = 11;
+var spawnCount = 12;
 var mL = 0;
 var liters;
 
 var waterIcon;
+
+var floor;
+var animalInset = 60;
 
 var textfield;
 var saveButton;
@@ -47,15 +50,13 @@ var keyIsReleased;
 
 
 function setup() {
+  
+  floor = 700;
 
   var canvas = createCanvas(windowWidth, windowHeight);
   canvas.style('display', 'block');
 
-  elephant = new Animal(45, height/2, "elephant");
-
   waterIcon = loadImage("data/waterdrop.png");
-
-  elephant.load();
 
   //this.elephant.preload();
 
@@ -63,10 +64,9 @@ function setup() {
   //waterMeter = liters;
   //timer = typingDelay;
 
-
   textfield = createInput('');
   textfield.size(500, 620);
-  textfield.position((width - (650 + 400 + 500)), 100);
+  textfield.position((width - (650 + 400 + 500)), floor - textfield.height);
   textfield.input(myInputEvent);
 
   saveButton = createButton('save');
@@ -82,6 +82,9 @@ function setup() {
   // Variables which determine width and height of waterfall
   waterfallMin = width-780;
   waterfallMax = width-400;
+
+  elephant = new Animal(-100, floor - 20, "elephant");
+  elephant.load();
 }
 
 function userSave() {
@@ -114,9 +117,10 @@ function constrained() {
   this.value.position(textfield.x, (textfield.x + textfield.width))
 }
 
-
 function draw() {
-
+  
+  floor = 700;
+  
   background(0, 150);
 
   //distance = dist(mouseX, mouseY, textfield.x, textfield.y);
@@ -135,8 +139,10 @@ function draw() {
   spawnParticles();
 
   //elephant.display();
-  if (mL > 10) {
+  if (mL > 1000 && elephant.x < (waterfallMin - animalInset)) {
     elephant.move();
+  } else {
+    elephant.standing();
   }
 
   // Avoid updating frame rate every frame (not as readable).
@@ -218,7 +224,7 @@ function spawnParticles() {
     particles[i].display();
 
     // If particles almost at bottom of screen, they lose opacity and disappear.
-    if (particles[i].pos.y > height - 100) {
+    if (particles[i].pos.y > floor) {
       particles[i].alpha -= 25;
       mL++;
     } else {
