@@ -30,6 +30,14 @@ function Animal(x, y, id) {
 
     this.walk.play();
   }
+  
+    this.moveOpposed = function() {
+    this.x -= this.vx;
+    animation(this.walk, this.x, this.y);
+    //this.walk.visible = true;
+
+    this.walk.play();
+  }
 
   this.standing = function() {
     //this.walk.stop();

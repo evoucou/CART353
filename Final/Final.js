@@ -14,6 +14,7 @@ var waterfallMax;
 var lion;
 var giraffe;
 var elephant;
+var elephant2;
 
 var particles = [];
 var bottomCollision;
@@ -86,7 +87,9 @@ function setup() {
   waterfallMax = width-400;
 
   elephant = new Animal(-100, floor - 110, "elephant");
+  elephant2 = new Animal(-100, floor - 70, "elephant");
   elephant.load();
+  elephant2.load();
 }
 
 function userSave() {
@@ -148,6 +151,16 @@ function draw() {
     this.elephant.drinking();
   } else {
     this.elephant.standing();
+  }
+
+  //elephant.display();
+  if (mL > 50000 && elephant2.x < (waterfallMin + 50)) {
+    this.elephant2.move();
+  } else if (typingDelay > 0) {
+    //this.elephant.standing();
+    this.elephant2.drinking();
+  } else {
+    this.elephant2.standing();
   }
 
 
