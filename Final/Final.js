@@ -46,11 +46,13 @@ var distance;
 
 var keyIsReleased;
 
+var lastDrop;
+
 // <textarea id="textfield"></textarea>
 
 
 function setup() {
-  
+
   floor = 700;
 
   var canvas = createCanvas(windowWidth, windowHeight);
@@ -83,7 +85,7 @@ function setup() {
   waterfallMin = width-780;
   waterfallMax = width-400;
 
-  elephant = new Animal(-100, floor - 20, "elephant");
+  elephant = new Animal(-100, floor - 110, "elephant");
   elephant.load();
 }
 
@@ -118,9 +120,9 @@ function constrained() {
 }
 
 function draw() {
-  
+
   floor = 700;
-  
+
   background(0, 150);
 
   //distance = dist(mouseX, mouseY, textfield.x, textfield.y);
@@ -140,10 +142,14 @@ function draw() {
 
   //elephant.display();
   if (mL > 1000 && elephant.x < (waterfallMin - animalInset)) {
-    elephant.move();
+    this.elephant.move();
+  } else if (typingDelay > 0) {
+    //this.elephant.standing();
+    this.elephant.drinking();
   } else {
-    elephant.standing();
+    this.elephant.standing();
   }
+
 
   // Avoid updating frame rate every frame (not as readable).
   if (frameCount % 10 == 0) {
@@ -192,21 +198,21 @@ function spawnParticles() {
 
       if (typingDelay < 4) {
 
-        if (value > 25) {
-          pulse = 0;
-          console.log("pulse: " + pulse + "value " + value);
-        } else if (value < 21) {
-          if (value > 19) { 
-            pulse = 1;
-            console.log("pulse: " + pulse + "value " + value);
-          }
-        }
+        //    if (value > 25) {
+        //      pulse = 0;
+        //      console.log("pulse: " + pulse + "value " + value);
+        //    } else if (value < 21) {
+        //      if (value > 19) { 
+        //        pulse = 1;
+        //        console.log("pulse: " + pulse + "value " + value);
+        //      }
+        //    }
 
-        if (pulse == 1) {
-          value += 2;
-        } else if (pulse == 0) {
-          value = 20;
-        }
+        //    if (pulse == 1) {
+        //      value += 2;
+        //    } else if (pulse == 0) {
+        //      value = 20;
+        //    }
 
         textSize(value);
         text("Keep typing!", width/2 - 45, height/2 - 50);
@@ -227,6 +233,7 @@ function spawnParticles() {
     if (particles[i].pos.y > floor) {
       particles[i].alpha -= 25;
       mL++;
+      //lastDrop = true;
     } else {
       // Else, if not at bottom, they have to move and are at full opacity.
       particles[i].alpha = 255;

@@ -1,31 +1,56 @@
 // Animal class
-var walk;
 
 function Animal(x, y, id) {
 
-  this.vx = 2;
+  this.vx = 3;
 
   this.x = x;
   this.y = y;
   this.id = id;
 
   this.load = function() {
-    this.walk = loadAnimation("data/" + this.id + "1.png", "data/" + this.id + "12.png");
+
+    this.walk = loadAnimation("data/" + this.id + "/" + this.id + "_walk1.png", "data/" + this.id + "/" + this.id + "_walk12.png");
+    this.neck = loadAnimation("data/" + this.id + "/" + this.id + "_drink1.png", "data/" + this.id + "/" + this.id + "_drink2.png");
+    this.drink = loadAnimation("data/" + this.id + "/" + this.id + "_water1.png", "data/" + this.id + "/" + this.id + "_water8.png");
+    this.neck.looping = false;
   }
+
+
+  //this.getAnim = function() {
+  //  animation(this.walk, this.x, this.y);
+  //  animation(this.neck, this.x, this.y);
+  //  animation(this.drink, this.x, this.y);
+  //}
 
   this.move = function() {
     this.x += this.vx;
-    this.walk.play();
-
     animation(this.walk, this.x, this.y);
+    //this.walk.visible = true;
+
+    this.walk.play();
   }
 
-  this.standing = function() { 
-
-    this.walk.goToFrame(0);
-    this.walk.stop();
+  this.standing = function() {
+    //this.walk.stop();
+    //this.walk.visible = false;
 
     animation(this.walk, this.x, this.y);
+   this.walk.stop(); 
+   this.walk.getFrameImage(0);
+
+    //this.walk.stop();
+    //this.neck.visible = true;
+    //this.neck.play();
+  }
+
+
+  this.drinking = function() {
+    //animation(this.drink, this.x, this.y);
+    animation(this.drink, this.x, this.y);
+    //this.drink.visible = true;
+    //this.drink.play();
+    //this.drink.stop();
   }
 }
 
