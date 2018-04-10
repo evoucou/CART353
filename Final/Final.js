@@ -49,9 +49,6 @@ var keyIsReleased;
 
 var lastDrop;
 
-// <textarea id="textfield"></textarea>
-
-
 function setup() {
 
   floor = 700;
@@ -60,8 +57,6 @@ function setup() {
   canvas.style('display', 'block');
 
   waterIcon = loadImage("data/waterdrop.png");
-
-  //this.elephant.preload();
 
   // We create a paragraph to display the timer
   //waterMeter = liters;
@@ -128,16 +123,6 @@ function draw() {
 
   background(0, 150);
 
-  //distance = dist(mouseX, mouseY, textfield.x, textfield.y);
-  ////console.log(distance);
-
-  //insideLeft = (textfield.x < mouseX);
-  //insideRight = (textfield.x + textfield.width > mouseX);
-  //insideTop = (textfield.y < mouseY);
-  //insideBottom = (textfield.y + textfield.height > mouseY);
-  //console.log("mouseX " + mouseX + " textfield.x " + textfield.x);
-  // console.log("mouseY " + mouseY + " textfield.y " + textfield.y);
-
   imageMode(CENTER);
   image(waterIcon, width-157, 47);
 
@@ -154,23 +139,6 @@ function draw() {
     this.elephant.standing();
     }
   }
-  //} else if (typingDelay > 0) {
-  //  //this.elephant.standing();
-  //  this.elephant.drinking();
-  //} else {
-  //  this.elephant.standing();
-  //}
-
-  ////elephant.display();
-  //if (mL > 50000 && elephant2.x < (waterfallMin + 50)) {
-  //  this.elephant2.move();
-  //} else if (typingDelay > 0) {
-  //  //this.elephant.standing();
-  //  this.elephant2.drinking();
-  //} else {
-  //  this.elephant2.standing();
-  //}
-
 
   // Avoid updating frame rate every frame (not as readable).
   if (frameCount % 10 == 0) {
@@ -268,16 +236,6 @@ function spawnParticles() {
     }
   }
 }
-
-//function insideBox() {
-//  console.log('inside')
-
-//    if (insideLeft && insideRight && insideTop && insideBottom) {
-//    inside = true;
-//  } else {
-//    inside = false;
-//  }
-//}
 
 //function keyPressed() {
 //  if (insideLeft && insideRight && insideTop && insideBottom) {

@@ -21,14 +21,6 @@ function Animal(x, y, id) {
   }
 
 
-  //this.getAnim = function() {
-  //  animation(this.walk, this.x, this.y);
-  //  animation(this.neck, this.x, this.y);
-  //  animation(this.drink, this.x, this.y);
-  //}
-
-
-
   this.moving = function() {
     this.x += this.vx;
     animation(this.walk, this.x, this.y);
@@ -37,7 +29,6 @@ function Animal(x, y, id) {
   this.drinking = function(animalX) {
     this.reverseBend.rewind();
     var frame;
-    //console.log("animalX :" + animalX);
     if (this.x == animalX) {
       this.vx = 0;
       this.walk.stop();
@@ -51,9 +42,7 @@ function Animal(x, y, id) {
       }
     }
 
-    //console.log("drink");
   }
-
 
   this.standing = function() {
     this.bend.rewind();
@@ -68,42 +57,3 @@ function Animal(x, y, id) {
     //}
   }
 }
-
-////// Animals parent class
-
-//function Animal(x, y, identifier) {
-
-//  var a;
-
-//  var vx = 3;
-
-//  this.x = x;
-//  this.y = y;
-//  this.identifier = identifier;
-
-//  //console.log("constructor: x" + x+" y "+y);
-
-//}
-//  //Animal.prototype.preload = function() {
-//  //  a = loadAnimation("data/" + this. string + "1.png", "data/" + this.string + "12.png");
-//  //}
-
-//  Animal.prototype.move = function() {
-//    this.x += this.vx;
-//    //console.log("moving "+this.x);
-
-//    //animation(a, this.x, this.y);
-//  }
-
-
-//  Animal.prototype.display = function() { 
-
-//    rect(this.x, this.y, 50, 50);
-//    //console.log("from display " + this.x + " "+this.y);
-//    stroke(255);
-//  }
-
-//    rect(this.x, this.y, 50, 50);
-//    //console.log("from display " + this.x + " "+this.y);
-//    stroke(255);
-//  }
