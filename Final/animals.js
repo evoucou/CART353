@@ -8,12 +8,16 @@ function Animal(x, y, id) {
   this.y = y;
   this.id = id;
 
+
   this.load = function() {
 
+    this.img = loadImage("data/" + this.id + "/" + this.id + "_walk1.png");
     this.walk = loadAnimation("data/" + this.id + "/" + this.id + "_walk1.png", "data/" + this.id + "/" + this.id + "_walk12.png");
-    this.neck = loadAnimation("data/" + this.id + "/" + this.id + "_drink1.png", "data/" + this.id + "/" + this.id + "_drink2.png");
+    this.bend = loadAnimation("data/" + this.id + "/" + this.id + "_drink1.png", "data/" + this.id + "/" + this.id + "_drink12.png");
+    this.reverseBend = loadAnimation("data/" + this.id + "/reverse/" + this.id + "_drink1.png", "data/" + this.id + "/reverse/" + this.id + "_drink12.png");
     this.drink = loadAnimation("data/" + this.id + "/" + this.id + "_water1.png", "data/" + this.id + "/" + this.id + "_water8.png");
-    this.neck.looping = false;
+    this.bend.looping = false;
+    this.reverseBend.looping = false;
   }
 
 
@@ -23,42 +27,45 @@ function Animal(x, y, id) {
   //  animation(this.drink, this.x, this.y);
   //}
 
-  this.move = function() {
+
+
+  this.moving = function() {
     this.x += this.vx;
     animation(this.walk, this.x, this.y);
-    //this.walk.visible = true;
-
-    this.walk.play();
   }
-  
-    this.moveOpposed = function() {
-    this.x -= this.vx;
-    animation(this.walk, this.x, this.y);
-    //this.walk.visible = true;
 
-    this.walk.play();
+  this.drinking = function(animalX) {
+    this.reverseBend.rewind();
+    var frame;
+    //console.log("animalX :" + animalX);
+    if (this.x == animalX) {
+      this.vx = 0;
+      this.walk.stop();
+      this.walk.visible = false;
+      animation(this.bend, this.x, this.y);
+      frame = this.bend.getFrame();
+      console.log("frame: " + frame);
+      if (frame == 11) {
+        animation(this.drink, this.x, this.y);
+        console.log("drink");
+      }
+    }
+
+    //console.log("drink");
   }
+
 
   this.standing = function() {
-    //this.walk.stop();
-    //this.walk.visible = false;
+    this.bend.rewind();
 
-    animation(this.walk, this.x, this.y);
-   this.walk.stop(); 
-   this.walk.getFrameImage(0);
-
-    //this.walk.stop();
-    //this.neck.visible = true;
-    //this.neck.play();
-  }
-
-
-  this.drinking = function() {
-    //animation(this.drink, this.x, this.y);
-    animation(this.drink, this.x, this.y);
-    //this.drink.visible = true;
-    //this.drink.play();
-    //this.drink.stop();
+    var frame;
+    animation(this.reverseBend, this.x, this.y);
+    frame = this.reverseBend.getFrame();
+    console.log("reverse frame: " + frame);
+    //if (frame == 11) {
+    //image(this.img, this.x, this.y);
+    //console.log("stand");
+    //}
   }
 }
 
@@ -90,6 +97,11 @@ function Animal(x, y, id) {
 
 
 //  Animal.prototype.display = function() { 
+
+//    rect(this.x, this.y, 50, 50);
+//    //console.log("from display " + this.x + " "+this.y);
+//    stroke(255);
+//  }
 
 //    rect(this.x, this.y, 50, 50);
 //    //console.log("from display " + this.x + " "+this.y);

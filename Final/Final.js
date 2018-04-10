@@ -144,24 +144,32 @@ function draw() {
   spawnParticles();
 
   //elephant.display();
-  if (mL > 1000 && elephant.x < (waterfallMin - animalInset)) {
-    this.elephant.move();
-  } else if (typingDelay > 0) {
-    //this.elephant.standing();
-    this.elephant.drinking();
-  } else {
+  if (mL > 1000) {
+    //console.log("elephant x : " + this.elephant.x);
+    if (elephant.x < (waterfallMin - animalInset)) {
+      this.elephant.moving();
+    } else if (typingDelay > 0) {
+      this.elephant.drinking(this.elephant.x);
+    } else {
     this.elephant.standing();
+    }
   }
+  //} else if (typingDelay > 0) {
+  //  //this.elephant.standing();
+  //  this.elephant.drinking();
+  //} else {
+  //  this.elephant.standing();
+  //}
 
-  //elephant.display();
-  if (mL > 50000 && elephant2.x < (waterfallMin + 50)) {
-    this.elephant2.move();
-  } else if (typingDelay > 0) {
-    //this.elephant.standing();
-    this.elephant2.drinking();
-  } else {
-    this.elephant2.standing();
-  }
+  ////elephant.display();
+  //if (mL > 50000 && elephant2.x < (waterfallMin + 50)) {
+  //  this.elephant2.move();
+  //} else if (typingDelay > 0) {
+  //  //this.elephant.standing();
+  //  this.elephant2.drinking();
+  //} else {
+  //  this.elephant2.standing();
+  //}
 
 
   // Avoid updating frame rate every frame (not as readable).
