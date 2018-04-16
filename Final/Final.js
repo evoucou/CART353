@@ -83,8 +83,10 @@ function setup() {
 
   elephant = new Animal(-100, floor - 110, 3, "elephant");
   lion = new Animal(width + 100, floor - 70, -3, "lion");
+  giraffe = new Animal(-100, floor - 60, 3, "giraffe");
   elephant.load();
   lion.load();
+  giraffe.load();
 }
 
 function userSave() {
@@ -148,6 +150,17 @@ function draw() {
       this.lion.drinking(this.lion.x);
     } else {
     this.lion.standing();
+    }
+  }
+  
+      if (mL > 100000) {
+    //console.log("elephant x : " + this.elephant.x);
+    if (giraffe.x < (waterfallMin - animalInset)) {
+      this.giraffe.moving();
+    } else if (typingDelay > 0) {
+      this.giraffe.drinking(this.giraffe.x);
+    } else {
+    this.giraffe.standing();
     }
   }
 
