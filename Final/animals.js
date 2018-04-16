@@ -36,27 +36,27 @@ function Animal(x, y, vx, id) {
       animation(this.bend, this.x, this.y);
       this.bend.visible = true;
       frame = this.bend.getFrame();
-      console.log("frame: " + frame);
+      //console.log("frame: " + frame);
       if (frame == 7) {
         animation(this.drink, this.x, this.y);
         this.bend.visible = false;
-        console.log("drink");
+        //console.log("drink");
       }
     }
   }
 
-  this.standing = function() {
+  this.crying = function() {
     this.bend.rewind();
 
     //var frame;
     animation(this.reverseBend, this.x, this.y);
     this.reverseBend.visible = true;
     frame = this.reverseBend.getFrame();
-    console.log("reverse frame: " + frame);
+    //console.log("reverse frame: " + frame);
     if (frame == 7) {
         animation(this.cry, this.x, this.y);
         this.reverseBend.visible = false;
-        console.log("cry");
+        //console.log("cry");
     }
   }
 }
