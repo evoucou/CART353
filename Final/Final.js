@@ -81,10 +81,10 @@ function setup() {
   waterfallMin = width-780;
   waterfallMax = width-400;
 
-  elephant = new Animal(-100, floor - 110, "elephant");
-  elephant2 = new Animal(-100, floor - 70, "elephant");
+  elephant = new Animal(-100, floor - 110, 3, "elephant");
+  lion = new Animal(width + 100, floor - 70, -3, "lion");
   elephant.load();
-  elephant2.load();
+  lion.load();
 }
 
 function userSave() {
@@ -137,6 +137,17 @@ function draw() {
       this.elephant.drinking(this.elephant.x);
     } else {
     this.elephant.standing();
+    }
+  }
+  
+    if (mL > 50000) {
+    //console.log("elephant x : " + this.elephant.x);
+    if (lion.x > (waterfallMax + animalInset)) {
+      this.lion.moving();
+    } else if (typingDelay > 0) {
+      this.lion.drinking(this.lion.x);
+    } else {
+    this.lion.standing();
     }
   }
 

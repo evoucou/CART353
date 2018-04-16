@@ -1,9 +1,8 @@
 // Animal class
 
-function Animal(x, y, id) {
+function Animal(x, y, vx, id) {
 
-  this.vx = 3;
-
+  this.vx = vx;
   this.x = x;
   this.y = y;
   this.id = id;
