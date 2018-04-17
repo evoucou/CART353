@@ -68,18 +68,11 @@ function setup() {
   //waterMeter = liters;
   //timer = typingDelay;
 
-  //textfield = createInput(copyTextarea);
-  //textfield.size(500, 620);
-  //textfield.position((width - (650 + 400 + 500)), ground - textfield.height);
-  //textfield.input(userTypingInput);
 
-  copyButton = createButton('select + press cmd + C');
-  copyButton.position(200);
+  copyButton = createButton('Copy');
+  copyButton.position(300, height - 100);
   copyButton.size(100, 30);
   copyButton.mousePressed(userSelect);
-
-  //textfield.x + 100, (textfield.y + textfield.height) + 20
-
 
   function userSelect() {
 
@@ -126,14 +119,20 @@ function centerCanvas() {
   var x = (windowWidth - width) / 2;
   var y = (windowHeight - height) / 2;
   canvas.position(x, y);
-}
+} 
+    
+  //console.log('pressed');
+  //typing = true;
+  //typingDelay = 10;
+  //clearInterval(interval);
 
-function windowResized() {
-  centerCanvas();
-}
+  //if (keyIsReleased) {
+  //  // When user releases a key, typing becomes false and we start the timer with setInterval.
+  //  console.log('released');
+  //  typing = false;
+  //  interval = setInterval(timeIt, 1000);
+  //}
 
-function userSelect() {
-}
 
 function userTypingInput() {
   //console.log("you are typing", this.value());
