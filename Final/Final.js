@@ -14,7 +14,7 @@ var waterfallMax;
 var lion;
 var giraffe;
 var elephant;
-var elephants;
+var elephants = [];
 
 var particles = [];
 var bottomCollision;
@@ -82,11 +82,14 @@ function setup() {
   waterfallMin = width-780;
   waterfallMax = width-400;
 
-  elephant = new Animal(-100, ground - 110, 3, "elephant");
+  for (var i = 0; i < 2; i++) {
+    elephants[i] = new Animal(-100, ground - 110, 3, "elephant");
+    elephants[i].load();
+  }
   lion = new Animal(width + 100, ground - 70, -3, "lion");
   giraffe = new Animal(-100, ground - 60, 3, "giraffe");
   //elephants.load();
-  elephant.load();
+
   lion.load();
   giraffe.load();
 }
@@ -140,9 +143,9 @@ function draw() {
   spawnAnimals();
 
   // Avoid updating frame rate every frame (not as readable).
-  if (frameCount % 10 == 0) {
-    fps = frameRate().toFixed(2);
-  }
+  //if (frameCount % 10 == 0) {
+  //  fps = frameRate().toFixed(2);
+  //}
 }
 
 function timeIt() {
@@ -158,16 +161,28 @@ function timeIt() {
   }
 }
 
-function spawnAnimals() {
-  if (liters > 20) {
-    //console.log("elephant x : " + this.elephant.x);
-    if (elephant.x < (waterfallMin - animalInset)) {
-      this.elephant.moving();
+function elephantBehaviour() {
+  for (var i = 0; i < elephants.length; i++) {
+    if (elephants[i].x < (waterfallMin - animalInset)) {
+      elephants[i].moving();
     } else if (typingDelay > 0) {
-      this.elephant.drinking(this.elephant.x);
+      elephants[i].drinking(elephants[i].x);
     } else {
-      this.elephant.standing();
+      elephants[i].crying();
     }
+  }
+}
+
+function spawnAnimals() {
+  var litersFrame = floor(particlesCount/100);
+  var e = litersFrame % 200;
+  console.log(e);
+
+  if (e == 1) {
+    //console.log("elephant x : " + this.elephant.x);   
+    elephants.push(new Animal(-100, ground - 110, 3, "elephant"));
+
+    elephantBehaviour();
   }
 
   if (liters > 50) {
@@ -177,7 +192,7 @@ function spawnAnimals() {
     } else if (typingDelay > 0) {
       this.lion.drinking(this.lion.x);
     } else {
-      this.lion.standing();
+      this.lion.crying();
     }
   }
 
@@ -188,119 +203,119 @@ function spawnAnimals() {
     } else if (typingDelay > 0) {
       this.giraffe.drinking(this.giraffe.x);
     } else {
-      this.giraffe.standing();
+      this.giraffe.crying();
     }
   }
 }
 
-  //function spawnLoopAnimals() {
-  //  var e = liters % 50;
-  //  var l;
-  //  var g;
-  //  //console.log("modulo " + e);
-  //  if (e == 1) {
-  //    console.log("modulo ======= 1");
+//function spawnLoopAnimals() {
+//  var e = liters % 50;
+//  var l;
+//  var g;
+//  //console.log("modulo " + e);
+//  if (e == 1) {
+//    console.log("modulo ======= 1");
 
-  //    if (this.elephants.x < (waterfallMin - animalInset)) {
-  //      this.elephants.moving();
-  //    } else if (typingDelay > 0) {
-  //      this.elephants.drinking(this.elephants.x);
-  //    } else {
-  //      this.elephants.crying();
-  //    }
-  //  }
-  //}
+//    if (this.elephants.x < (waterfallMin - animalInset)) {
+//      this.elephants.moving();
+//    } else if (typingDelay > 0) {
+//      this.elephants.drinking(this.elephants.x);
+//    } else {
+//      this.elephants.crying();
+//    }
+//  }
+//}
 
-  function spawnParticles() {
+function spawnParticles() {
 
-    colorMode(HSB, 360);
+  colorMode(HSB, 360);
 
-    // Spawn new particles only if the user is typing
-    if (typing || typingDelay != 0) {
-      for (var i = 0; i < spawnCount; i++) {
-        var x = random(waterfallMin, waterfallMax);
-        var mass = random(pMinMass, pMaxMass);
-        displayColor = color(random(180, 200), 255, 255);
+  // Spawn new particles only if the user is typing
+  if (typing || typingDelay != 0) {
+    for (var i = 0; i < spawnCount; i++) {
+      var x = random(waterfallMin, waterfallMax);
+      var mass = random(pMinMass, pMaxMass);
+      displayColor = color(random(180, 200), 255, 255);
 
-        // We create our array of particles with the constructor
-        var newParticle = new Particle(x, 0, mass, displayColor);
-        particles[particles.length] = newParticle;
-      }
-
-      textSize(50);
-      if (typingDelay < 6) {    
-        text(typingDelay, width/2, height/2 + 10);
-
-        if (typingDelay < 4) {
-
-          //    if (value > 25) {
-          //      pulse = 0;
-          //      console.log("pulse: " + pulse + "value " + value);
-          //    } else if (value < 21) {
-          //      if (value > 19) { 
-          //        pulse = 1;
-          //        console.log("pulse: " + pulse + "value " + value);
-          //      }
-          //    }
-
-          //    if (pulse == 1) {
-          //      value += 2;
-          //    } else if (pulse == 0) {
-          //      value = 20;
-          //    }
-
-          textSize(value);
-          text("Keep typing!", width/2 - 45, height/2 - 50);
-        }
-      }
+      // We create our array of particles with the constructor
+      var newParticle = new Particle(x, 0, mass, displayColor);
+      particles[particles.length] = newParticle;
     }
 
-    colorMode(RGB, 255);
+    textSize(50);
+    if (typingDelay < 6) {    
+      text(typingDelay, width/2, height/2 + 10);
 
-    // Here, the loop looks like this because we are checking the particles in reverse.
-    // We have to do this, or else, we will skip a 'number' in our array, since we are deleting one with splice.
-    for (var i = particles.length-1; i > -1; i--) {
+      if (typingDelay < 4) {
 
-      // Always display particles
-      particles[i].display();
+        //    if (value > 25) {
+        //      pulse = 0;
+        //      console.log("pulse: " + pulse + "value " + value);
+        //    } else if (value < 21) {
+        //      if (value > 19) { 
+        //        pulse = 1;
+        //        console.log("pulse: " + pulse + "value " + value);
+        //      }
+        //    }
 
-      // If particles almost at bottom of screen, they lose opacity and disappear.
-      if (particles[i].pos.y > ground) {
-        particles[i].alpha -= 25;
-        particlesCount++;
-        //lastDrop = true;
-      } else {
-        // Else, if not at bottom, they have to move and are at full opacity.
-        particles[i].alpha = 255;
-        particles[i].move();
-      }
+        //    if (pulse == 1) {
+        //      value += 2;
+        //    } else if (pulse == 0) {
+        //      value = 20;
+        //    }
 
-      // This function deletes particles that disappeared at the bottom (no opacity).
-      // Else, particles are spawned continuously and accumulate, so the webpage becomes slower and slower as there are too many particles.
-      if (particles[i].alpha < 0) {
-        particles.splice(i, 1);
+        textSize(value);
+        text("Keep typing!", width/2 - 45, height/2 - 50);
       }
     }
   }
 
-  //function keyPressed() {
-  //  if (insideLeft && insideRight && insideTop && insideBottom) {
-  //    // When user presses a key, typing becomes true, the previous timer count is cleared and we reset it. 
-  //    //console.log('pressed');
-  //    //typingDelay = 8;
-  //    //typing = true;
-  //    //clearInterval(interval);
-  //  }
-  //}
+  colorMode(RGB, 255);
 
-  function keyReleased() {
-    keyIsReleased = true;
+  // Here, the loop looks like this because we are checking the particles in reverse.
+  // We have to do this, or else, we will skip a 'number' in our array, since we are deleting one with splice.
+  for (var i = particles.length-1; i > -1; i--) {
+
+    // Always display particles
+    particles[i].display();
+
+    // If particles almost at bottom of screen, they lose opacity and disappear.
+    if (particles[i].pos.y > ground) {
+      particles[i].alpha -= 25;
+      particlesCount++;
+      //lastDrop = true;
+    } else {
+      // Else, if not at bottom, they have to move and are at full opacity.
+      particles[i].alpha = 255;
+      particles[i].move();
+    }
+
+    // This function deletes particles that disappeared at the bottom (no opacity).
+    // Else, particles are spawned continuously and accumulate, so the webpage becomes slower and slower as there are too many particles.
+    if (particles[i].alpha < 0) {
+      particles.splice(i, 1);
+    }
   }
+}
+
+//function keyPressed() {
+//  if (insideLeft && insideRight && insideTop && insideBottom) {
+//    // When user presses a key, typing becomes true, the previous timer count is cleared and we reset it. 
+//    //console.log('pressed');
+//    //typingDelay = 8;
+//    //typing = true;
+//    //clearInterval(interval);
+//  }
+//}
+
+function keyReleased() {
+  keyIsReleased = true;
+}
 
 
-  /*
+/*
 Initial waterfall code :
-   
-   Jason Labbe
-   jasonlabbe3d.com
-   */
+ 
+ Jason Labbe
+ jasonlabbe3d.com
+ */
