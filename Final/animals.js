@@ -19,7 +19,7 @@ function Animal(x, y, vx, id) {
     this.reverseBend = loadAnimation("data/" + this.id + "/reverse/" + this.id + "_bend1.png", "data/" + this.id + "/reverse/" + this.id + "_bend8.png");
     this.drink = loadAnimation("data/" + this.id + "/" + this.id + "_drink1.png", "data/" + this.id + "/" + this.id + "_drink8.png");
     this.cry = loadAnimation("data/" + this.id + "/" + this.id + "_cry1.png", "data/" + this.id + "/" + this.id + "_cry10.png");
- 
+
     // The bending animation does not loop
     this.bend.looping = false;
     this.reverseBend.looping = false;
@@ -33,20 +33,20 @@ function Animal(x, y, vx, id) {
 
   this.drinking = function(animalX) {
     this.reverseBend.rewind();
-
     var frame;
     if (this.x == animalX) {
 
       this.vx = 0;
       this.walk.stop();
       this.walk.visible = false;
-      animation(this.bend, this.x, this.y);
-      this.bend.visible = true;
-      frame = this.bend.getFrame();
-      if (frame == 7) {     
-        // We want the animal to start drinking only when he is bent.
-        animation(this.drink, this.x, this.y);
-        this.bend.visible = false;
+
+        animation(this.bend, this.x, this.y);
+        this.bend.visible = true;
+        frame = this.bend.getFrame();
+        if (frame == 7) {     
+          // We want the animal to start drinking only when he is bent.
+          animation(this.drink, this.x, this.y);
+          this.bend.visible = false;
       }
     }
   }

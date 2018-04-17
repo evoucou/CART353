@@ -2,6 +2,11 @@
 //
 // Marie-Eve Cousineau
 //
+// *NOTE
+// I DO NOT KNOW HOW TO MAKE THE WEBSITE RESPONSIVE WITH P5.JS
+// And frankly it would've been a complicated task.
+// If you look in the folder, I put an image of what I see on my screen. Hopefully, everything
+// won't be too messed up on yours (I doubt it but I'm crossing my fingers!)
 
 var pMinMass = 2;
 var pMaxMass = 8;
@@ -29,7 +34,7 @@ var keyIsReleased = true;
 
 var liters = 0;
 var waterIcon;
-var waterAnim;
+var waterPuddle;
 
 var ground;
 var animalInset = 60;
@@ -40,14 +45,16 @@ var copyButton;
 var canvas;
 var bg;
 var logo;
+var unlocked;
 
 function preload() {
-  // We preload our animations
+  // We preload our animations  
   this.bg = loadImage("data/bg.png");
   this.logo = loadImage("data/logo.png");
+  this.unlocked = loadImage("data/congratulations.png");
 
   this.unicorn = loadAnimation("data/mystical/unicorn1.png", "data/mystical/unicorn12.png");
-  this.waterAnim = loadAnimation("data/water/watersource1.png", "data/water/watersource8.png");
+  this.waterPuddle = loadAnimation("data/water/watersource1.png", "data/water/watersource8.png");
 }
 
 function setup() {
@@ -59,7 +66,7 @@ function setup() {
 
   // Creating the copy button
   copyButton = createButton('Copy');
-  copyButton.position(300, windowHeight - 220);
+  copyButton.position(300, windowHeight - 190);
   copyButton.size(150, 50);
   copyButton.mousePressed(userCopy);
 
@@ -96,6 +103,13 @@ function draw() {
   spawnAnimals();
 }
 
+function centerCanvas() {
+
+  //Centers the canvas in the page. Hopefully this helps with responsive issues
+  var x = (windowWidth - width) / 2;
+  var y = (windowHeight - height) / 2;
+  canvas.position(x, y);
+} 
 
 function loadAnimals() {
 
@@ -110,7 +124,7 @@ function loadAnimals() {
     this.elephantsLeft[i].load();
   }
   for (var i = 0; i < 3; i++) {
-    this.lionsLeft[i] = new Animal(-700, windowHeight - 187, -3, "lion");
+    this.lionsLeft[i] = new Animal(0, windowHeight - 187, -3, "lion");
     this.lionsLeft[i].load();
   }
   for (var i = 0; i < 3; i++) {
@@ -133,13 +147,6 @@ function userCopy() {
   document.execCommand('copy');
 }
 
-function centerCanvas() {
-
-  //Centers the canvas in the page. Hopefully this helps with responsive issues
-  var x = (windowWidth - width) / 2;
-  var y = (windowHeight - height) / 2;
-  canvas.position(x, y);
-} 
 
 function userTypingInput() {
 
@@ -155,7 +162,6 @@ function userTypingInput() {
     interval = setInterval(timeIt, 1000);
   }
 }
-
 
 function timeIt() {
 
@@ -174,6 +180,9 @@ function spawnMythicals() {
   // (Because this is a bit of a prototype, the waiting times are quite short.
   if (liters > 800) {
     animation(this.unicorn, 1500, windowHeight/2);
+    if (liters < 860) {
+      image(this.unlocked, windowWidth/2, 120);
+    }
   }
 }
 
@@ -214,8 +223,6 @@ function spawnAnimals() {
   // I am using scale to rotate the animals so they can come from both sides.
   scale(-1, 1);
   if (liters > 200) {
-
-    console.log(this.elephantsRight[1].x);
     if (this.elephantsRight[1].x < ((waterfallMax - animalInset)*-1)) {
       this.elephantsRight[1].moving();
     } else if (typingDelay > 0) {
@@ -247,8 +254,8 @@ function spawnParticles() {
     for (var i = 0; i < spawnCount; i++) {
       var x = random(waterfallMin, waterfallMax);
       var mass = random(pMinMass, pMaxMass);
-      
-  // When a mythical creature appears, the waterfall changes color to a more eerie-like tone.
+
+      // When a mythical creature appears, the waterfall changes color to a more eerie-like tone.
       if (liters >= 760 && liters <= 780) {
         displayColor = color(255, 170, random(120, 200));
       } else if (liters >= 780 && liters <= 800) {
@@ -261,11 +268,11 @@ function spawnParticles() {
       var newParticle = new Particle(x, 0, mass, displayColor);
       particles[particles.length] = newParticle;
     }
-
+    
     if (typingDelay > 0) {
 
       // If the water is running, so is the water puddle.
-      animation(this.waterAnim, waterfallMax - 300, ground + 200);
+      animation(this.waterPuddle, waterfallMax - 300, ground + 200);
 
       if (typingDelay < 6) {  
         text(typingDelay, width/2, height/2 + 10);
@@ -314,7 +321,7 @@ function keyReleased() {
 
 /*
 Initial waterfall code :
-(I do not own it)
+ (I do not own it)
  
  Jason Labbe
  jasonlabbe3d.com
