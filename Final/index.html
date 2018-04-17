@@ -10,6 +10,7 @@
   <script language="javascript" type="text/javascript" src="particles.js"></script>
   <script language="javascript" type="text/javascript" src="Final.js"></script>
   <!-- OK, YOU CAN MAKE CHANGES BELOW THIS LINE AGAIN -->
+  <script language="javascript" type="text/javascript" src="path/to/p5.sound.js"></script>
 
   <!-- This line removes any default padding and style. 
   You might only need one of these values set. -->
@@ -21,8 +22,8 @@ display:
 
 justify-content: 
   left;
-  
-  padding-left: 
+
+padding-left: 
   300;
 
 align-items: 
@@ -39,13 +40,24 @@ position:
 z-index: 
   99999;
 } 
+
+textarea {
+font-size: 
+  18px;
+
+line-height: 
+  30px;
+
+padding:
+  20px;
+}
 </style>
 
   </head>
 
   <body>
   <!-- The text field -->
-  <textarea value="Begin your essay" id="userInput" onkeypress="userTypingInput();" rows="45" cols="75"></textarea>
+  <font size=15><textarea id="userInput" onkeypress="userTypingInput();" rows="23" cols="67">You may begin your essay. Try collecting as many liters as possible! You might unlock a special creature. Also, do not forget to save your text from time to time. It will go into your clipboard.Good luck!</textarea></font>
 
   <div id="sketch-holder">
 

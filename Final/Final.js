@@ -3,8 +3,6 @@
 // Marie-Eve Cousineau
 //
 
-var NBKeyPressed;
-
 var pMinMass = 2;
 var pMaxMass = 8;
 var cMinMass = 15;
@@ -18,159 +16,68 @@ var lionsLeft = [];
 var giraffes = [];
 var elephantsLeft = [];
 var elephantsRight = [];
+var unicorn;
 
 var particles = [];
-var bottomCollision;
-
-var fps;
-var colorDisplay;
-var typing = false;
-//var timer;
-//var waterMeter;
-var typingDelay = 0;
-var objectDelay;
-
-var spawnCount = 15;
+var spawnCount = 13;
 var particlesCount = 0;
-var liters = 0;
-var modu;
+var colorDisplay;
 
+var typing = false;
+var typingDelay = 0;
+var keyIsReleased = true;
+
+var liters = 0;
 var waterIcon;
+var waterAnim;
 
 var ground;
 var animalInset = 60;
 
 var textfield;
-var saveButton;
 var copyButton;
 
-var value = 20;
-var pulse = 1;
-
-var inside = false;
-var distance;
-
-var keyIsReleased = true;
-
-var userEssay;
-
 var canvas;
-var waterAnim;
-var unicorn;
-
 var bg;
 var logo;
 
-
-function setup() {
-
+function preload() {
+  // We preload our animations
   this.bg = loadImage("data/bg.png");
   this.logo = loadImage("data/logo.png");
 
   this.unicorn = loadAnimation("data/mystical/unicorn1.png", "data/mystical/unicorn12.png");
   this.waterAnim = loadAnimation("data/water/watersource1.png", "data/water/watersource8.png");
-  this.reverseWater = loadAnimation("data/water/reverse/watersource1.png", "data/water/reverse/watersource8.png");
-  //this.waterAnim.looping = false;
-  this.reverseWater.looping = false;
+}
+
+function setup() {
 
   canvas = createCanvas(windowWidth, windowHeight);
   centerCanvas();
-  //canvas.parent('sketch-holder');
 
   waterIcon = loadImage("data/waterdrop.png");
 
-  // We create a paragraph to display the timer
-  //waterMeter = liters;
-  //timer = typingDelay;
-
-
+  // Creating the copy button
   copyButton = createButton('Copy');
-  copyButton.position(300, windowHeight - 190);
-  copyButton.size(100, 30);
-  copyButton.mousePressed(userSelect);
-
-  function userSelect() {
-
-    var copyTextarea = document.getElementById("userInput");
-    copyTextarea.select();
-    document.execCommand('copy');
-    //copyText.select();
-    //document.execCommand("Copy");
-  }
+  copyButton.position(300, windowHeight - 220);
+  copyButton.size(150, 50);
+  copyButton.mousePressed(userCopy);
 
   // Variables which determine width and height of waterfall
   waterfallMin = width-780;
   waterfallMax = width-400;
 
-
-  for (var i = 0; i < 3; i++) {
-    this.elephantsRight[i] = new Animal(-windowWidth, windowHeight - 200, 3, "elephant");
-    this.elephantsRight[i].load();
-  }
-
-
-  for (var i = 0; i < 3; i++) {
-    this.elephantsLeft[i] = new Animal(-100, windowHeight - 255, 3, "elephant");
-    this.elephantsLeft[i].load();
-  }
-
-  for (var i = 0; i < 3; i++) {
-    this.lionsLeft[i] = new Animal(-700, windowHeight - 187, -3, "lion");
-    this.lionsLeft[i].load();
-  }
-
-  for (var i = 0; i < 3; i++) {
-    this.lionsRight[i] = new Animal(width + 100, windowHeight - 298, -3, "lion");
-    this.lionsRight[i].load();
-  }
-
-  for (var i = 0; i < 3; i++) {
-    this.giraffes[i] = new Animal(-100, windowHeight - 360, 3, "giraffe");
-    this.giraffes[i].load();
-  }
+  // We load our animals
+  loadAnimals();
 }
-
-function centerCanvas() {
-  var x = (windowWidth - width) / 2;
-  var y = (windowHeight - height) / 2;
-  canvas.position(x, y);
-} 
-
-//console.log('pressed');
-//typing = true;
-//typingDelay = 10;
-//clearInterval(interval);
-
-//if (keyIsReleased) {
-//  // When user releases a key, typing becomes false and we start the timer with setInterval.
-//  console.log('released');
-//  typing = false;
-//  interval = setInterval(timeIt, 1000);
-//}
-
-
-function userTypingInput() {
-  //console.log("you are typing", this.value());
-  console.log('pressed');
-  typing = true;
-  typingDelay = 10;
-  clearInterval(interval);
-
-  if (keyIsReleased) {
-    // When user releases a key, typing becomes false and we start the timer with setInterval.
-    console.log('released');
-    typing = false;
-    interval = setInterval(timeIt, 1000);
-  }
-}
-
 
 function draw() {
 
-  ground = windowHeight - 295;
+  //Determining the y of the "floor"
+  this.ground = windowHeight - 295;
 
+  //Too many particles are spawned therefore the count would go up too fast. So we divide by 500.
   liters = floor(particlesCount/500);
-
 
   imageMode(CENTER);
   image(this.bg, windowWidth/2, windowHeight/2);
@@ -183,22 +90,76 @@ function draw() {
 
   textSize(80);
 
+  // Spawn our elements
   spawnParticles();
   spawnMythicals();
   spawnAnimals();
-
-
-  // Avoid updating frame rate every frame (not as readable).
-  //if (frameCount % 10 == 0) {
-  //  fps = frameRate().toFixed(2);
-  //}
 }
+
+
+function loadAnimals() {
+
+  // Here, we simply load our arrays fro animals and we load the animations.
+  for (var i = 0; i < 3; i++) {
+    this.elephantsRight[i] = new Animal(-windowWidth, windowHeight - 200, 3, "elephant");
+    this.elephantsRight[i].load();
+  }
+
+  for (var i = 0; i < 3; i++) {
+    this.elephantsLeft[i] = new Animal(-100, windowHeight - 255, 3, "elephant");
+    this.elephantsLeft[i].load();
+  }
+  for (var i = 0; i < 3; i++) {
+    this.lionsLeft[i] = new Animal(-700, windowHeight - 187, -3, "lion");
+    this.lionsLeft[i].load();
+  }
+  for (var i = 0; i < 3; i++) {
+    this.lionsRight[i] = new Animal(width + 100, windowHeight - 298, -3, "lion");
+    this.lionsRight[i].load();
+  }
+  for (var i = 0; i < 3; i++) {
+    this.giraffes[i] = new Animal(-100, windowHeight - 360, 3, "giraffe");
+    this.giraffes[i].load();
+  }
+}
+
+function userCopy() {
+
+  // This function is called when the user clicks on the copy button. The page selects the whole content
+  // within the textarea and then copies it to the clipboard. When the user is done typing, he can easily copy
+  // paste it into another software that will allow him to format his text and count his words.
+  var copyTextarea = document.getElementById("userInput");
+  copyTextarea.select();
+  document.execCommand('copy');
+}
+
+function centerCanvas() {
+
+  //Centers the canvas in the page. Hopefully this helps with responsive issues
+  var x = (windowWidth - width) / 2;
+  var y = (windowHeight - height) / 2;
+  canvas.position(x, y);
+} 
+
+function userTypingInput() {
+
+  //This function is the one which allows the program to recognize when there is user input. It controls
+  // the typing delay and of course, the waterfall.
+  typing = true;
+  typingDelay = 10;
+  clearInterval(interval);
+
+  if (keyIsReleased) {
+    // When user releases a key, typing becomes false and we restart the time delay with setInterval.
+    typing = false;
+    interval = setInterval(timeIt, 1000);
+  }
+}
+
 
 function timeIt() {
 
   // Timer function. When it's running, it counts down to 0 and then clears.
-  //console.log("typingdelay " + typingDelay);
-
   if (typingDelay == 0)
   {
     clearInterval(interval);
@@ -208,16 +169,20 @@ function timeIt() {
 }
 
 function spawnMythicals() {
-  if (liters > 150) {
-    //console.log(this.elephantsRight[1].x);
+
+  // We spawn our mythical creature at a high lever of liters. We could have more than one.
+  // (Because this is a bit of a prototype, the waiting times are quite short.
+  if (liters > 800) {
     animation(this.unicorn, 1500, windowHeight/2);
   }
 }
 
 function spawnAnimals() {
 
-
-  if (liters > 30) {
+  // We spawn ours animals gradually. Even if I am only using one of each animal, I have created arrays
+  // so that, if I wish to develop this project further, the arrays are already there.
+  // I have tried to find a way to generate them infinively, however I have been unsuccessful.
+  if (liters > 300) {
     if (giraffes[1].x < waterfallMin - animalInset) {
       this.giraffes[1].moving();
     } else if (typingDelay > 0) {
@@ -227,7 +192,7 @@ function spawnAnimals() {
     }
   }
 
-  if (liters > 10) {
+  if (liters > 50) {
     if (this.elephantsLeft[1].x < (waterfallMin - (animalInset+10))) {
       this.elephantsLeft[1].moving();
     } else if (typingDelay > 0) {
@@ -237,8 +202,7 @@ function spawnAnimals() {
     }
   }
 
-  if (liters > 20) {
-    //console.log("elephant x : " + this.elephant.x);
+  if (liters > 100) {
     if (lionsRight[1].x > (waterfallMax - animalInset)) {
       this.lionsRight[1].moving();
     } else if (typingDelay > 0) {
@@ -247,8 +211,9 @@ function spawnAnimals() {
       this.lionsRight[1].crying();
     }
   }
+  // I am using scale to rotate the animals so they can come from both sides.
   scale(-1, 1);
-  if (liters > 0) {
+  if (liters > 200) {
 
     console.log(this.elephantsRight[1].x);
     if (this.elephantsRight[1].x < ((waterfallMax - animalInset)*-1)) {
@@ -260,8 +225,7 @@ function spawnAnimals() {
     }
   }    
 
-  if (liters > 50) {
-    //console.log("lion x " + this.lionsLeft[1].x);
+  if (liters > 400) {
     if (this.lionsLeft[1].x > (waterfallMin*-1)+150) {
       this.lionsLeft[1].moving();
     } else if (typingDelay > 0) {
@@ -273,26 +237,9 @@ function spawnAnimals() {
   scale(1, 1);
 }
 
-//function spawnLoopAnimals() {
-//  var e = liters % 50;
-//  var l;
-//  var g;
-//  //console.log("modu " + e);
-//  if (e == 1) {
-//    console.log("modu ======= 1");
-
-//    if (this.elephants.x < (waterfallMin - animalInset)) {
-//      this.elephants.moving();
-//    } else if (typingDelay > 0) {
-//      this.elephants.drinking(this.elephants.x);
-//    } else {
-//      this.elephants.crying();
-//    }
-//  }
-//}
-
 function spawnParticles() {
 
+  // We spawn our particles when the user is typing and when the typing delay is not at 0.
   colorMode(HSB, 360);
 
   // Spawn new particles only if the user is typing
@@ -300,30 +247,32 @@ function spawnParticles() {
     for (var i = 0; i < spawnCount; i++) {
       var x = random(waterfallMin, waterfallMax);
       var mass = random(pMinMass, pMaxMass);
-      if (liters >= 100 && liters <= 120) {
+      
+  // When a mythical creature appears, the waterfall changes color to a more eerie-like tone.
+      if (liters >= 760 && liters <= 780) {
         displayColor = color(255, 170, random(120, 200));
-      } else if (liters >= 120 && liters <= 140) {
+      } else if (liters >= 780 && liters <= 800) {
         displayColor = color(255, random(120, 200), 255);
       } else {
         displayColor = color(random(180, 200), 255, 255);
       }
-
 
       // We create our array of particles with the constructor
       var newParticle = new Particle(x, 0, mass, displayColor);
       particles[particles.length] = newParticle;
     }
 
-
     if (typingDelay > 0) {
+
+      // If the water is running, so is the water puddle.
       animation(this.waterAnim, waterfallMax - 300, ground + 200);
 
       if (typingDelay < 6) {  
         text(typingDelay, width/2, height/2 + 10);
 
         if (typingDelay < 4) {
-
-          text("Keep typing!", width/2 - 45, height/2 - 50);
+          textSize(30);
+          text("Keep typing!", width/2 - 45, height/2 - 80);
         }
       }
     }
@@ -357,12 +306,15 @@ function spawnParticles() {
 }
 
 function keyReleased() {
+
+  // This function is necessary so the program knows a key is released.
   keyIsReleased = true;
 }
 
 
 /*
 Initial waterfall code :
+(I do not own it)
  
  Jason Labbe
  jasonlabbe3d.com
