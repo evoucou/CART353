@@ -3,6 +3,8 @@
 // Marie-Eve Cousineau
 //
 
+var NBKeyPressed;
+
 var pMinMass = 2;
 var pMaxMass = 8;
 var cMinMass = 15;
@@ -54,10 +56,12 @@ var userEssay;
 
 var canvas;
 var waterAnim;
+var unicorn;
 
 
 function setup() {
 
+  this.unicorn = loadAnimation("data/mystical/unicorn1.png", "data/mystical/unicorn12.png");
   this.waterAnim = loadAnimation("data/water/watersource1.png", "data/water/watersource8.png");
   this.reverseWater = loadAnimation("data/water/reverse/watersource1.png", "data/water/reverse/watersource8.png");
   //this.waterAnim.looping = false;
@@ -157,6 +161,8 @@ function userTypingInput() {
 
 function draw() {
 
+  //ChangeofColor();
+
   ground = windowHeight - 295;
 
 
@@ -167,13 +173,15 @@ function draw() {
   imageMode(CENTER);
   image(waterIcon, width-157, 47);
 
-  textSize(24);
+  textSize(28);
   fill(255);
   text(liters, width-135, 55);
 
 
   spawnParticles();
+  spawnMythicals();
   spawnAnimals();
+
 
   // Avoid updating frame rate every frame (not as readable).
   //if (frameCount % 10 == 0) {
@@ -194,12 +202,18 @@ function timeIt() {
   }
 }
 
+function spawnMythicals() {
+  if (liters > 150) {
+    //console.log(this.elephantsRight[1].x);
+    animation(this.unicorn, 1500, windowHeight/2);
+  }
+}
 
 function spawnAnimals() {
-objectDelay = typingDelay - 2;
+  objectDelay = typingDelay - 2;
 
-console.log("typing " + typingDelay);
-console.log("obj " + objectDelay);
+  console.log("typing " + typingDelay);
+  console.log("obj " + objectDelay);
 
   if (liters > 30) {
     if (giraffes[1].x < waterfallMin) {
@@ -241,6 +255,7 @@ console.log("obj " + objectDelay);
       this.elephantsRight[1].crying();
     }
   }    
+
   scale(-1, 1);
   if (liters > 50) {
     //console.log("lion x " + this.lionsLeft[1].x);
@@ -282,7 +297,12 @@ function spawnParticles() {
     for (var i = 0; i < spawnCount; i++) {
       var x = random(waterfallMin, waterfallMax);
       var mass = random(pMinMass, pMaxMass);
-      displayColor = color(random(180, 200), 255, 255);
+      if (liters >= 100 && liters <= 130) {
+        displayColor = color(255, 170, random(120, 200));
+      } else {
+        displayColor = color(random(180, 200), 255, 255);
+      }
+
 
       // We create our array of particles with the constructor
       var newParticle = new Particle(x, 0, mass, displayColor);
