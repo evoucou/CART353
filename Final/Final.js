@@ -11,9 +11,11 @@ var interval ;
 var waterfallMin;
 var waterfallMax;
 
-var lions = [];
-var giraffes = []
-  var elephants = [];
+var lionsRight = [];
+var lionsLeft = [];
+var giraffes = [];
+var elephantsLeft = [];
+var elephantsRight = [];
 
 var particles = [];
 var bottomCollision;
@@ -45,7 +47,7 @@ var pulse = 1;
 var inside = false;
 var distance;
 
-var keyIsReleased;
+var keyIsReleased = true;
 
 var lastDrop;
 
@@ -81,21 +83,34 @@ function setup() {
   waterfallMin = width-780;
   waterfallMax = width-400;
 
-  for (var i = 0; i < 4; i++) {
-    this.elephants[i] = new Animal(-100, ground - 110, 3, "elephant");
-    this.elephants[i].load();
+
+  for (var i = 0; i < 3; i++) {
+    this.elephantsRight[i] = new Animal(width + 100, 720, -3, "elephant");
+    this.elephantsRight[i].load();
   }
 
-  for (var i = 0; i < 4; i++) {
-    this.lions[i] = new Animal(width + 100, ground - 70, -3, "lion");
-    this.lions[i].load();
+
+  for (var i = 0; i < 3; i++) {
+    this.elephantsLeft[i] = new Animal(-100, 665, 3, "elephant");
+    this.elephantsLeft[i].load();
   }
 
-  for (var i = 0; i < 4; i++) {
-    this.giraffes[i] = new Animal(-100, ground - 60, 3, "giraffe");
+  for (var i = 0; i < 3; i++) {
+    this.lionsLeft[i] = new Animal(-700, 727, -3, "lion");
+    this.lionsLeft[i].load();
+  }
+
+  for (var i = 0; i < 3; i++) {
+    this.lionsRight[i] = new Animal(width + 100, 628, -3, "lion");
+    this.lionsRight[i].load();
+  }
+
+  for (var i = 0; i < 3; i++) {
+    this.giraffes[i] = new Animal(-100, 590, 3, "giraffe");
     this.giraffes[i].load();
   }
 }
+
 
 function userSave() {
   console.log("save");
@@ -142,7 +157,6 @@ function draw() {
   fill(255);
   text(liters, width-135, 55);
 
-  console.log("lengt "+ this.elephants.length);
 
   spawnParticles();
   spawnAnimals();
@@ -170,30 +184,8 @@ function timeIt() {
 function spawnAnimals() {
 
 
-  if (liters > 10) {
-    if (this.elephants[1].x < (waterfallMin - animalInset)) {
-      this.elephants[1].moving();
-    } else if (typingDelay > 0) {
-      this.elephants[1].drinking(this.elephants[1].x);
-    } else {
-      this.elephants[1].crying();
-    }
-  }
-
-  if (liters > 70) {
-    //console.log("elephant x : " + this.elephant.x);
-    if (lions[1].x > (waterfallMax + animalInset)) {
-      this.lions[1].moving();
-    } else if (typingDelay > 0) {
-      this.lions[1].drinking(this.lions[1].x);
-    } else {
-      this.lions[1].crying();
-    }
-  }
-
-  if (liters > 100) {
-    //console.log("elephant x : " + this.elephant.x);
-    if (giraffes[1].x < (waterfallMin - animalInset)) {
+  if (liters > 30) {
+    if (giraffes[1].x < waterfallMin) {
       this.giraffes[1].moving();
     } else if (typingDelay > 0) {
       this.giraffes[1].drinking(this.giraffes[1].x);
@@ -202,15 +194,48 @@ function spawnAnimals() {
     }
   }
 
-  if (liters > 120) {
-    if (this.elephants[2].x < (waterfallMin - animalInset)) {
-      this.elephants[2].moving();
+  if (liters > 10) {
+    if (this.elephantsLeft[1].x < (waterfallMin - animalInset)) {
+      this.elephantsLeft[1].moving();
     } else if (typingDelay > 0) {
-      this.elephants[2].drinking(this.elephants[2].x);
+      this.elephantsLeft[1].drinking(this.elephantsLeft[1].x);
     } else {
-      this.elephants[2].crying();
+      this.elephantsLeft[1].crying();
     }
   }
+
+  if (liters > 20) {
+    //console.log("elephant x : " + this.elephant.x);
+    if (lionsRight[1].x > (waterfallMax + animalInset)) {
+      this.lionsRight[1].moving();
+    } else if (typingDelay > 0) {
+      this.lionsRight[1].drinking(this.lionsRight[1].x);
+    } else {
+      this.lionsRight[1].crying();
+    }
+  }
+  if (liters > 0) {
+    console.log(this.elephantsRight[1].x);
+    if (this.elephantsRight[1].x > waterfallMax) {
+      this.elephantsRight[1].moving();
+    } else if (typingDelay > 0) {
+      this.elephantsRight[1].drinking(this.elephantsRight[1].x);
+    } else {
+      this.elephantsRight[1].crying();
+    }
+  }    
+  scale(-1, 1);
+  if (liters > 50) {
+    //console.log("lion x " + this.lionsLeft[1].x);
+    if (this.lionsLeft[1].x > (waterfallMin*-1)) {
+      this.lionsLeft[1].moving();
+    } else if (typingDelay > 0) {
+      this.lionsLeft[1].drinking(this.lionsLeft[1].x);
+    } else {
+      this.lionsLeft[1].crying();
+    }
+  }
+  scale(1, 1);
 }
 
 //function spawnLoopAnimals() {
