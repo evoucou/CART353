@@ -30,7 +30,7 @@ var typing = false;
 var typingDelay = 0;
 var objectDelay;
 
-var spawnCount = 12;
+var spawnCount = 15;
 var particlesCount = 0;
 var liters = 0;
 var modu;
@@ -58,8 +58,14 @@ var canvas;
 var waterAnim;
 var unicorn;
 
+var bg;
+var logo;
+
 
 function setup() {
+
+  this.bg = loadImage("data/bg.png");
+  this.logo = loadImage("data/logo.png");
 
   this.unicorn = loadAnimation("data/mystical/unicorn1.png", "data/mystical/unicorn12.png");
   this.waterAnim = loadAnimation("data/water/watersource1.png", "data/water/watersource8.png");
@@ -79,7 +85,7 @@ function setup() {
 
 
   copyButton = createButton('Copy');
-  copyButton.position(300, windowHeight - 170);
+  copyButton.position(300, windowHeight - 190);
   copyButton.size(100, 30);
   copyButton.mousePressed(userSelect);
 
@@ -98,7 +104,7 @@ function setup() {
 
 
   for (var i = 0; i < 3; i++) {
-    this.elephantsRight[i] = new Animal(width + 100, windowHeight - 200, -3, "elephant");
+    this.elephantsRight[i] = new Animal(-windowWidth, windowHeight - 200, 3, "elephant");
     this.elephantsRight[i].load();
   }
 
@@ -161,22 +167,21 @@ function userTypingInput() {
 
 function draw() {
 
-  //ChangeofColor();
-
   ground = windowHeight - 295;
-
 
   liters = floor(particlesCount/500);
 
-  background(0, 150);
 
   imageMode(CENTER);
-  image(waterIcon, width-157, 47);
+  image(this.bg, windowWidth/2, windowHeight/2);
+  image(this.logo, -1400, 20);
+  image(this.waterIcon, width-157, 47);
 
   textSize(28);
   fill(255);
   text(liters, width-135, 55);
 
+  textSize(80);
 
   spawnParticles();
   spawnMythicals();
@@ -210,13 +215,10 @@ function spawnMythicals() {
 }
 
 function spawnAnimals() {
-  objectDelay = typingDelay - 2;
 
-  console.log("typing " + typingDelay);
-  console.log("obj " + objectDelay);
 
   if (liters > 30) {
-    if (giraffes[1].x < waterfallMin) {
+    if (giraffes[1].x < waterfallMin - animalInset) {
       this.giraffes[1].moving();
     } else if (typingDelay > 0) {
       this.giraffes[1].drinking(this.giraffes[1].x);
@@ -226,7 +228,7 @@ function spawnAnimals() {
   }
 
   if (liters > 10) {
-    if (this.elephantsLeft[1].x < (waterfallMin - animalInset)) {
+    if (this.elephantsLeft[1].x < (waterfallMin - (animalInset+10))) {
       this.elephantsLeft[1].moving();
     } else if (typingDelay > 0) {
       this.elephantsLeft[1].drinking(this.elephantsLeft[1].x);
@@ -237,7 +239,7 @@ function spawnAnimals() {
 
   if (liters > 20) {
     //console.log("elephant x : " + this.elephant.x);
-    if (lionsRight[1].x > (waterfallMax + animalInset)) {
+    if (lionsRight[1].x > (waterfallMax - animalInset)) {
       this.lionsRight[1].moving();
     } else if (typingDelay > 0) {
       this.lionsRight[1].drinking(this.lionsRight[1].x);
@@ -245,9 +247,11 @@ function spawnAnimals() {
       this.lionsRight[1].crying();
     }
   }
+  scale(-1, 1);
   if (liters > 0) {
-    //console.log(this.elephantsRight[1].x);
-    if (this.elephantsRight[1].x > waterfallMax) {
+
+    console.log(this.elephantsRight[1].x);
+    if (this.elephantsRight[1].x < ((waterfallMax - animalInset)*-1)) {
       this.elephantsRight[1].moving();
     } else if (typingDelay > 0) {
       this.elephantsRight[1].drinking(this.elephantsRight[1].x);
@@ -256,10 +260,9 @@ function spawnAnimals() {
     }
   }    
 
-  scale(-1, 1);
   if (liters > 50) {
     //console.log("lion x " + this.lionsLeft[1].x);
-    if (this.lionsLeft[1].x > (waterfallMin*-1)) {
+    if (this.lionsLeft[1].x > (waterfallMin*-1)+150) {
       this.lionsLeft[1].moving();
     } else if (typingDelay > 0) {
       this.lionsLeft[1].drinking(this.lionsLeft[1].x);
@@ -297,8 +300,10 @@ function spawnParticles() {
     for (var i = 0; i < spawnCount; i++) {
       var x = random(waterfallMin, waterfallMax);
       var mass = random(pMinMass, pMaxMass);
-      if (liters >= 100 && liters <= 130) {
+      if (liters >= 100 && liters <= 120) {
         displayColor = color(255, 170, random(120, 200));
+      } else if (liters >= 120 && liters <= 140) {
+        displayColor = color(255, random(120, 200), 255);
       } else {
         displayColor = color(random(180, 200), 255, 255);
       }
@@ -309,34 +314,15 @@ function spawnParticles() {
       particles[particles.length] = newParticle;
     }
 
-    textSize(50);
-    console.log("obj " + objectDelay);
-    console.log("typping " + typingDelay);
-    if (typingDelay > 0) {
-      animation(this.waterAnim, 1100, ground + 200);
 
-      if (typingDelay < 6) {    
+    if (typingDelay > 0) {
+      animation(this.waterAnim, waterfallMax - 300, ground + 200);
+
+      if (typingDelay < 6) {  
         text(typingDelay, width/2, height/2 + 10);
 
         if (typingDelay < 4) {
 
-          //    if (value > 25) {
-          //      pulse = 0;
-          //      console.log("pulse: " + pulse + "value " + value);
-          //    } else if (value < 21) {
-          //      if (value > 19) { 
-          //        pulse = 1;
-          //        console.log("pulse: " + pulse + "value " + value);
-          //      }
-          //    }
-
-          //    if (pulse == 1) {
-          //      value += 2;
-          //    } else if (pulse == 0) {
-          //      value = 20;
-          //    }
-
-          textSize(value);
           text("Keep typing!", width/2 - 45, height/2 - 50);
         }
       }
