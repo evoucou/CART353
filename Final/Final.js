@@ -49,14 +49,18 @@ var distance;
 
 var keyIsReleased = true;
 
-var lastDrop;
+var userEssay;
+
+var canvas;
+
 
 function setup() {
 
   ground = 700;
 
-  var canvas = createCanvas(windowWidth, windowHeight);
-  canvas.style('display', 'block');
+  canvas = createCanvas(windowWidth, windowHeight);
+  centerCanvas();
+  //canvas.parent('sketch-holder');
 
   waterIcon = loadImage("data/waterdrop.png");
 
@@ -64,20 +68,27 @@ function setup() {
   //waterMeter = liters;
   //timer = typingDelay;
 
-  textfield = createInput('');
-  textfield.size(500, 620);
-  textfield.position((width - (650 + 400 + 500)), ground - textfield.height);
-  textfield.input(myInputEvent);
+  //textfield = createInput(copyTextarea);
+  //textfield.size(500, 620);
+  //textfield.position((width - (650 + 400 + 500)), ground - textfield.height);
+  //textfield.input(userTypingInput);
 
-  saveButton = createButton('save');
-  saveButton.position((textfield.x + textfield.width/3) - saveButton.width/2, (textfield.y + textfield.height) + 20);
-  saveButton.size(100, 30);
-  saveButton.mousePressed(userCopy);
-
-  copyButton = createButton('copy');
-  copyButton.position((textfield.x + textfield.width/2) + copyButton.width/2, (textfield.y + textfield.height) + 20);
+  copyButton = createButton('select + press cmd + C');
+  copyButton.position(200);
   copyButton.size(100, 30);
-  copyButton.mousePressed(userSave);
+  copyButton.mousePressed(userSelect);
+
+  //textfield.x + 100, (textfield.y + textfield.height) + 20
+
+
+  function userSelect() {
+
+    var copyTextarea = document.getElementById("userInput");
+    copyTextarea.select();
+    document.execCommand('copy');
+    //copyText.select();
+    //document.execCommand("Copy");
+  }
 
   // Variables which determine width and height of waterfall
   waterfallMin = width-780;
@@ -111,23 +122,24 @@ function setup() {
   }
 }
 
-
-function userSave() {
-  console.log("save");
-}
-function userCopy() {
-  console.log("copy");
+function centerCanvas() {
+  var x = (windowWidth - width) / 2;
+  var y = (windowHeight - height) / 2;
+  canvas.position(x, y);
 }
 
 function windowResized() {
-  resizeCanvas(windowWidth, windowHeight);
+  centerCanvas();
 }
 
-function myInputEvent() {
+function userSelect() {
+}
+
+function userTypingInput() {
   //console.log("you are typing", this.value());
   console.log('pressed');
   typing = true;
-  typingDelay = 8;
+  typingDelay = 10;
   clearInterval(interval);
 
   if (keyIsReleased) {
@@ -215,7 +227,7 @@ function spawnAnimals() {
     }
   }
   if (liters > 0) {
-    console.log(this.elephantsRight[1].x);
+    //console.log(this.elephantsRight[1].x);
     if (this.elephantsRight[1].x > waterfallMax) {
       this.elephantsRight[1].moving();
     } else if (typingDelay > 0) {

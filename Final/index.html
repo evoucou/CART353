@@ -1,5 +1,5 @@
 <html>
-<head>
+  <head>
   <meta charset="UTF-8">
 
   <!-- PLEASE NO CHANGES BELOW THIS LINE (UNTIL I SAY SO) -->
@@ -12,12 +12,42 @@
   <!-- OK, YOU CAN MAKE CHANGES BELOW THIS LINE AGAIN -->
 
   <!-- This line removes any default padding and style. 
-       You might only need one of these values set. -->
-  <style> body {padding: 0; margin: 0;} </style>
-  <style> #textfield {margin: 80; padding: 80; top: 1000px; left: 300px;} </style>
-  
-</head>
+  You might only need one of these values set. -->
+  <style> body {
+margin: 
+  0;
+display: 
+  flex;
 
-<body>
-</body>
-</html>
+justify-content: 
+  center;
+
+align-items: 
+  center;
+} 
+html, body {
+height: 
+  100%;
+}
+</style>
+  <style> #userInput {
+position: 
+  relative;
+z-index: 
+  99999;
+} 
+</style>
+
+  </head>
+
+  <body>
+  <!-- The text field -->
+  <textarea value="Type here" id="userInput" rows="45" cols="75"></textarea>
+
+  <div id="sketch-holder">
+
+  <!-- Our sketch will go here! -->
+  </div>
+  </body>
+
+  </html>
