@@ -11,10 +11,9 @@ var interval ;
 var waterfallMin;
 var waterfallMax;
 
-var lion;
-var giraffe;
-var elephant;
-var elephants = [1];
+var lions = [];
+var giraffes = []
+  var elephants = [];
 
 var particles = [];
 var bottomCollision;
@@ -82,26 +81,20 @@ function setup() {
   waterfallMin = width-780;
   waterfallMax = width-400;
 
-  for (var i = 0; i < 2; i++) {
+  for (var i = 0; i < 4; i++) {
     this.elephants[i] = new Animal(-100, ground - 110, 3, "elephant");
     this.elephants[i].load();
   }
-  lion = new Animal(width + 100, ground - 70, -3, "lion");
-  giraffe = new Animal(-100, ground - 60, 3, "giraffe");
-  //elephants.load();
 
-  lion.load();
-  giraffe.load();
+  for (var i = 0; i < 4; i++) {
+    this.lions[i] = new Animal(width + 100, ground - 70, -3, "lion");
+    this.lions[i].load();
+  }
 
-  //for (var i = 0; i < this.elephants.length - 1; i++) {
-  //  if (this.elephants[i].x < (waterfallMin - animalInset)) {
-  //    this.elephants[i].moving();
-  //  } else if (typingDelay > 0) {
-  //    this.elephants[i].drinking(this.elephants[i].x);
-  //  } else {
-  //    this.elephants[i].crying();
-  //  }
-  //}
+  for (var i = 0; i < 4; i++) {
+    this.giraffes[i] = new Animal(-100, ground - 60, 3, "giraffe");
+    this.giraffes[i].load();
+  }
 }
 
 function userSave() {
@@ -149,28 +142,7 @@ function draw() {
   fill(255);
   text(liters, width-135, 55);
 
-  var litersFrame = floor(particlesCount/100);
-  var e = litersFrame % 200;
-  console.log(e);
-
-
-  console.log("length " + this.elephants.length);
-
-  for (var i = 0; i < this.elephants.length-1; i++) {
-    if (this.elephants[i].x < (waterfallMin - animalInset)) {
-      this.elephants[i].moving();
-    } else if (typingDelay > 0) {
-      this.elephants[i].drinking(this.elephants[i].x);
-    } else {
-      this.elephants[i].crying();
-    }
-  }
-
-
-
-
-
-
+  console.log("lengt "+ this.elephants.length);
 
   spawnParticles();
   spawnAnimals();
@@ -197,35 +169,46 @@ function timeIt() {
 
 function spawnAnimals() {
 
-  //if (this.elephants.x < (waterfallMin - animalInset)) {
-  //  this.elephants.moving();
-  //} else if (typingDelay > 0) {
-  //  this.elephants.drinking(this.elephants.x);
-  //} else {
-  //  this.elephants.crying();
-  //}
 
-
-
-  if (liters > 50) {
-    //console.log("elephant x : " + this.elephant.x);
-    if (lion.x > (waterfallMax + animalInset)) {
-      this.lion.moving();
+  if (liters > 10) {
+    if (this.elephants[1].x < (waterfallMin - animalInset)) {
+      this.elephants[1].moving();
     } else if (typingDelay > 0) {
-      this.lion.drinking(this.lion.x);
+      this.elephants[1].drinking(this.elephants[1].x);
     } else {
-      this.lion.crying();
+      this.elephants[1].crying();
+    }
+  }
+
+  if (liters > 70) {
+    //console.log("elephant x : " + this.elephant.x);
+    if (lions[1].x > (waterfallMax + animalInset)) {
+      this.lions[1].moving();
+    } else if (typingDelay > 0) {
+      this.lions[1].drinking(this.lions[1].x);
+    } else {
+      this.lions[1].crying();
     }
   }
 
   if (liters > 100) {
     //console.log("elephant x : " + this.elephant.x);
-    if (giraffe.x < (waterfallMin - animalInset)) {
-      this.giraffe.moving();
+    if (giraffes[1].x < (waterfallMin - animalInset)) {
+      this.giraffes[1].moving();
     } else if (typingDelay > 0) {
-      this.giraffe.drinking(this.giraffe.x);
+      this.giraffes[1].drinking(this.giraffes[1].x);
     } else {
-      this.giraffe.crying();
+      this.giraffes[1].crying();
+    }
+  }
+
+  if (liters > 120) {
+    if (this.elephants[2].x < (waterfallMin - animalInset)) {
+      this.elephants[2].moving();
+    } else if (typingDelay > 0) {
+      this.elephants[2].drinking(this.elephants[2].x);
+    } else {
+      this.elephants[2].crying();
     }
   }
 }
@@ -318,19 +301,6 @@ function spawnParticles() {
       particles.splice(i, 1);
     }
   }
-}
-
-function keyPressed() {
-  //  if (insideLeft && insideRight && insideTop && insideBottom) {
-  //    // When user presses a key, typing becomes true, the previous timer count is cleared and we reset it. 
-  //    //console.log('pressed');
-  //    //typingDelay = 8;
-  //    //typing = true;
-  //    //clearInterval(interval);
-  //  }
-    this.elephants.push(new Animal(-100, random((ground - 700), (ground-10)), 3, "elephant"));
-    //console.log(this.elephants);
-
 }
 
 function keyReleased() {
